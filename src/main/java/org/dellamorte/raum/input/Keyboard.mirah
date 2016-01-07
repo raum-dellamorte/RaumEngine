@@ -14,7 +14,7 @@ import org.lwjgl.glfw.GLFW
  * @author Raum
  */
 class Keyboard < GLFWKeyCallback
-	@@keys = boolean[65536]
+  @@keys = boolean[65536]
   def initialize()
     
   end

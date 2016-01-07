@@ -13,10 +13,10 @@ import org.lwjgl.glfw.GLFWCursorPosCallback
  * @author Raum
  */
 class MousePos < GLFWCursorPosCallback
-	@@xPos = double(0.0)
-	@@yPos = double(0.0)
-	@@dx = double(0.0)
-	@@dy = double(0.0)
+  @@xPos = double(0.0)
+  @@yPos = double(0.0)
+  @@dx = double(0.0)
+  @@dy = double(0.0)
   
   def initialize()
     

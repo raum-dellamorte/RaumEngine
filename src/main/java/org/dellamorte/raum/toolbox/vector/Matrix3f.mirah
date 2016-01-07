@@ -53,28 +53,28 @@ class Matrix3f < Matrix
   attr_accessor m21:float
   attr_accessor m22:float
   /**
-	 * Constructor for Matrix3f. Matrix is initialised to the identity.
-	 **/
+   * Constructor for Matrix3f. Matrix is initialised to the identity.
+   **/
   def initialize():void
     super()
     setIdentity()
   end
   
   /**
-	 * Load from another matrix
-	 * @param src The source matrix
-	 * @return this
-	 **/
+   * Load from another matrix
+   * @param src The source matrix
+   * @return this
+   **/
   def load(src:Matrix3f):Matrix3f
     return load(src, self)
   end
   
   /**
-	 * Copy source matrix to destination matrix
-	 * @param src The source matrix
-	 * @param dest The destination matrix, or null of a new matrix is to be created
-	 * @return The copied matrix
-	 **/
+   * Copy source matrix to destination matrix
+   * @param src The source matrix
+   * @param dest The destination matrix, or null of a new matrix is to be created
+   * @return The copied matrix
+   **/
   def self.load(src:Matrix3f, dest:Matrix3f):Matrix3f
     dest = Matrix3f.new() if (dest == nil)
     dest.m00 = src.m00
@@ -90,12 +90,12 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Load from a float buffer. The buffer stores the matrix in column major
-	 * (OpenGL) order.
-	 *
-	 * @param buf A float buffer to read from
-	 * @return this
-	 **/
+   * Load from a float buffer. The buffer stores the matrix in column major
+   * (OpenGL) order.
+   *
+   * @param buf A float buffer to read from
+   * @return this
+   **/
   def load(buf:FloatBuffer):Matrix
     m00 = buf.get()
     m01 = buf.get()
@@ -110,12 +110,12 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Load from a float buffer. The buffer stores the matrix in row major
-	 * (maths) order.
-	 *
-	 * @param buf A float buffer to read from
-	 * @return this
-	 **/
+   * Load from a float buffer. The buffer stores the matrix in row major
+   * (maths) order.
+   *
+   * @param buf A float buffer to read from
+   * @return this
+   **/
   def loadTranspose(buf:FloatBuffer):Matrix
     m00 = buf.get()
     m10 = buf.get()
@@ -130,10 +130,10 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Store this matrix in a float buffer. The matrix is stored in column
-	 * major (openGL) order.
-	 * @param buf The buffer to store this matrix in
-	 **/
+   * Store this matrix in a float buffer. The matrix is stored in column
+   * major (openGL) order.
+   * @param buf The buffer to store this matrix in
+   **/
   def store(buf:FloatBuffer):Matrix
     buf.put(@m00)
     buf.put(@m01)
@@ -148,10 +148,10 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Store this matrix in a float buffer. The matrix is stored in row
-	 * major (maths) order.
-	 * @param buf The buffer to store this matrix in
-	 **/
+   * Store this matrix in a float buffer. The matrix is stored in row
+   * major (maths) order.
+   * @param buf The buffer to store this matrix in
+   **/
   def storeTranspose(buf:FloatBuffer):Matrix
     buf.put(@m00)
     buf.put(@m10)
@@ -166,12 +166,12 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Add two matrices together and place the result in a third matrix.
-	 * @param left The left source matrix
-	 * @param right The right source matrix
-	 * @param dest The destination matrix, or null if a new one is to be created
-	 * @return the destination matrix
-	 **/
+   * Add two matrices together and place the result in a third matrix.
+   * @param left The left source matrix
+   * @param right The right source matrix
+   * @param dest The destination matrix, or null if a new one is to be created
+   * @return the destination matrix
+   **/
   def self.add(left:Matrix3f, right:Matrix3f, dest:Matrix3f):Matrix3f
     dest = Matrix3f.new() if (dest == nil)
     dest.m00 = left.m00 + right.m00
@@ -187,12 +187,12 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Subtract the right matrix from the left and place the result in a third matrix.
-	 * @param left The left source matrix
-	 * @param right The right source matrix
-	 * @param dest The destination matrix, or null if a new one is to be created
-	 * @return the destination matrix
-	 **/
+   * Subtract the right matrix from the left and place the result in a third matrix.
+   * @param left The left source matrix
+   * @param right The right source matrix
+   * @param dest The destination matrix, or null if a new one is to be created
+   * @return the destination matrix
+   **/
   def self.sub(left:Matrix3f, right:Matrix3f, dest:Matrix3f):Matrix3f
     dest = Matrix3f.new() if (dest == nil)
     dest.m00 = left.m00 - right.m00
@@ -208,12 +208,12 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Multiply the right matrix by the left and place the result in a third matrix.
-	 * @param left The left source matrix
-	 * @param right The right source matrix
-	 * @param dest The destination matrix, or null if a new one is to be created
-	 * @return the destination matrix
-	 **/
+   * Multiply the right matrix by the left and place the result in a third matrix.
+   * @param left The left source matrix
+   * @param right The right source matrix
+   * @param dest The destination matrix, or null if a new one is to be created
+   * @return the destination matrix
+   **/
   def self.mul(left:Matrix3f, right:Matrix3f, dest:Matrix3f):Matrix3f
     dest = Matrix3f.new() if (dest == nil)
     m00 = float(left.m00 * right.m00 + left.m10 * right.m01 + left.m20 * right.m02)
@@ -238,13 +238,13 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Transform a Vector by a matrix and return the result in a destination
-	 * vector.
-	 * @param left The left matrix
-	 * @param right The right vector
-	 * @param dest The destination vector, or null if a new one is to be created
-	 * @return the destination vector
-	 **/
+   * Transform a Vector by a matrix and return the result in a destination
+   * vector.
+   * @param left The left matrix
+   * @param right The right vector
+   * @param dest The destination vector, or null if a new one is to be created
+   * @return the destination vector
+   **/
   def self.transform(left:Matrix3f, right:Vector3f, dest:Vector3f):Vector3f
     dest = Vector3f.new() if (dest == nil)
     x = float(left.m00 * right.x + left.m10 * right.y + left.m20 * right.z)
@@ -257,28 +257,28 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Transpose this matrix
-	 * @return this
-	 **/
+   * Transpose this matrix
+   * @return this
+   **/
   def transpose():Matrix
     return transpose(self, self)
   end
   
   /**
-	 * Transpose this matrix and place the result in another matrix
-	 * @param dest The destination matrix or null if a new matrix is to be created
-	 * @return the transposed matrix
-	 **/
+   * Transpose this matrix and place the result in another matrix
+   * @param dest The destination matrix or null if a new matrix is to be created
+   * @return the transposed matrix
+   **/
   def transpose(dest:Matrix3f):Matrix3f
     return transpose(self, dest)
   end
   
   /**
-	 * Transpose the source matrix and place the result into the destination matrix
-	 * @param src The source matrix to be transposed
-	 * @param dest The destination matrix or null if a new matrix is to be created
-	 * @return the transposed matrix
-	 **/
+   * Transpose the source matrix and place the result into the destination matrix
+   * @param src The source matrix to be transposed
+   * @param dest The destination matrix or null if a new matrix is to be created
+   * @return the transposed matrix
+   **/
   def self.transpose(src:Matrix3f, dest:Matrix3f):Matrix3f
     dest = Matrix3f.new() if (dest == nil)
     m00 = float(src.m00)
@@ -303,16 +303,16 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * @return the determinant of the matrix
-	 **/
+   * @return the determinant of the matrix
+   **/
   def determinant():float
     f = float(@m00 * (@m11 * @m22 - @m12 * @m21) + @m01 * (@m12 * @m20 - @m10 * @m22) + @m02 * (@m10 * @m21 - @m11 * @m20))
     return f
   end
   
   /**
-	 * Returns a string representation of this matrix
-	 **/
+   * Returns a string representation of this matrix
+   **/
   def toString():String
     buf = StringBuilder(StringBuilder.new())
     buf.append(@m00).append(':').append(@m10).append(':').append(@m20).append(':').append('\n')
@@ -322,31 +322,31 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Invert this matrix
-	 * @return this if successful, null otherwise
-	 **/
+   * Invert this matrix
+   * @return this if successful, null otherwise
+   **/
   def invert():Matrix
     return invert(self, self)
   end
   
   /**
-	 * Invert the source matrix and put the result into the destination matrix
-	 * @param src The source matrix to be inverted
-	 * @param dest The destination matrix, or null if a new one is to be created
-	 * @return The inverted matrix if successful, null otherwise
-	 **/
+   * Invert the source matrix and put the result into the destination matrix
+   * @param src The source matrix to be inverted
+   * @param dest The destination matrix, or null if a new one is to be created
+   * @return The inverted matrix if successful, null otherwise
+   **/
   def self.invert(src:Matrix3f, dest:Matrix3f):Matrix3f
     determinant = float(src.determinant())
     if (determinant != 0)
       dest = Matrix3f.new() if (dest == nil)
       /* do it the ordinary way
-			  *
-			  * inv(A) = 1/det(A) * adj(T), where adj(T) = transpose(Conjugate Matrix)
-			  *
-			  * m00 m01 m02
-			  * m10 m11 m12
-			  * m20 m21 m22
-			  **/
+        *
+        * inv(A) = 1/det(A) * adj(T), where adj(T) = transpose(Conjugate Matrix)
+        *
+        * m00 m01 m02
+        * m10 m11 m12
+        * m20 m21 m22
+        **/
       determinant_inv = float(float(1)/determinant)
       # get the conjugate matrix
       t00 = float(src.m11 * src.m22 - src.m12 * src.m21)
@@ -374,28 +374,28 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Negate this matrix
-	 * @return this
-	 **/
+   * Negate this matrix
+   * @return this
+   **/
   def negate():Matrix
     return negate(self)
   end
   
   /**
-	 * Negate this matrix and place the result in a destination matrix.
-	 * @param dest The destination matrix, or null if a new matrix is to be created
-	 * @return the negated matrix
-	 **/
+   * Negate this matrix and place the result in a destination matrix.
+   * @param dest The destination matrix, or null if a new matrix is to be created
+   * @return the negated matrix
+   **/
   def negate(dest:Matrix3f):Matrix3f
     return negate(self, dest)
   end
   
   /**
-	 * Negate the source matrix and place the result in the destination matrix.
-	 * @param src The source matrix
-	 * @param dest The destination matrix, or null if a new matrix is to be created
-	 * @return the negated matrix
-	 **/
+   * Negate the source matrix and place the result in the destination matrix.
+   * @param src The source matrix
+   * @param dest The destination matrix, or null if a new matrix is to be created
+   * @return the negated matrix
+   **/
   def self.negate(src:Matrix3f, dest:Matrix3f):Matrix3f
     dest = Matrix3f.new() if (dest == nil)
     dest.m00 = -src.m00
@@ -411,18 +411,18 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Set this matrix to be the identity matrix.
-	 * @return this
-	 **/
+   * Set this matrix to be the identity matrix.
+   * @return this
+   **/
   def setIdentity():Matrix
     return setIdentity(self)
   end
   
   /**
-	 * Set the matrix to be the identity matrix.
-	 * @param m The matrix to be set to the identity
-	 * @return m
-	 **/
+   * Set the matrix to be the identity matrix.
+   * @param m The matrix to be set to the identity
+   * @return m
+   **/
   def self.setIdentity(m:Matrix3f):Matrix3f
     m.m00 = float(1.0)
     m.m01 = float(0.0)
@@ -437,18 +437,18 @@ class Matrix3f < Matrix
   end
   
   /**
-	 * Set this matrix to 0.
-	 * @return this
-	 **/
+   * Set this matrix to 0.
+   * @return this
+   **/
   def setZero():Matrix
     return setZero(self)
   end
   
   /**
-	 * Set the matrix matrix to 0.
-	 * @param m The matrix to be set to 0
-	 * @return m
-	 **/
+   * Set the matrix matrix to 0.
+   * @param m The matrix to be set to 0
+   * @return m
+   **/
   def self.setZero(m:Matrix3f):Matrix3f
     m.m00 = float(0.0)
     m.m01 = float(0.0)

@@ -14,17 +14,17 @@ import org.dellamorte.raum.textures.Texture
  * @author Raum
  */
 class TexturedModel 
-	def initialize(model:RawModel, modelTexture:Texture):void
-		@rawModel = model
-		@texture = modelTexture
-	end
-	
-	def getRawModel():RawModel
-		@rawModel
-	end
-	
-	def getModelTexture():Texture
-		@texture
-	end
+  def initialize(model:RawModel, modelTexture:Texture):void
+    @rawModel = model
+    @texture = modelTexture
+  end
+  
+  def getRawModel():RawModel
+    @rawModel
+  end
+  
+  def getModelTexture():Texture
+    @texture
+  end
 end
 

@@ -6,7 +6,7 @@
 
 package org.dellamorte.raum.entities
 import Player
-import org.dellamorte.raum.guis.GuiTexture
+import org.dellamorte.raum.textures.TextureGui
 
 
 /**
@@ -14,7 +14,7 @@ import org.dellamorte.raum.guis.GuiTexture
  * @author Raum
  */
 class StatusBar 
-	def initialize(player:Player, statusbar:GuiTexture, statType:String):void
+  def initialize(player:Player, statusbar:TextureGui, statType:String):void
     @plyr = player
     @bar = statusbar
     @stat = statType

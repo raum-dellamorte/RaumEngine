@@ -15,7 +15,7 @@ import org.lwjgl.glfw.GLFWMouseButtonCallback
  * @author Raum
  */
 class Mouse < GLFWMouseButtonCallback
-	@@actions = StringBlockMap.new()
+  @@actions = StringBlockMap.new()
   @@buttons = boolean[12]
   
   def initialize():void

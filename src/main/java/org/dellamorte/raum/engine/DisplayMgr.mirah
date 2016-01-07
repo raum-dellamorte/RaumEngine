@@ -19,11 +19,11 @@ import static org.lwjgl.system.MemoryUtil
 class DisplayMgr
   def self.WIDTH():int; 800; end
   def self.HEIGHT():int; 600; end
-	def self.FPS_CAP():int; 120; end
+  def self.FPS_CAP():int; 120; end
   def self.NULL():long; org::lwjgl::system::MemoryUtil.NULL; end
   
   def self.init():boolean
-		@@delta = float(0.0)
+    @@delta = float(0.0)
     glfwSetErrorCallback(@@errorCallback = GLFWErrorCallback.createPrint(System.err))
     (puts "Unable to initialize GLFW"; return false) if ( glfwInit() != GLFW.GLFW_TRUE() )
     # throw IllegalStateException.new("Unable to initialize GLFW") 
@@ -73,9 +73,9 @@ class DisplayMgr
   def self.updateDisplay():void
     glfwSwapBuffers(@@window)
     glfwSetWindowShouldClose(@@window, GLFW.GLFW_TRUE) if @@keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)
-		timeNow = getCurrentTime()
-		@@delta = float(float(timeNow - @@lastFrameTime) / float(1000.0))
-		@@lastFrameTime = timeNow
+    timeNow = getCurrentTime()
+    @@delta = float(float(timeNow - @@lastFrameTime) / float(1000.0))
+    @@lastFrameTime = timeNow
   end
   
   def self.isCloseRequested():boolean
@@ -88,19 +88,19 @@ class DisplayMgr
     glfwTerminate()
     @@errorCallback.release()
   end
-	
-	def self.getFrameTimeSeconds():float
-		@@delta
-	end
-	
-	def self.getCurrentTime():long
-		begin
+  
+  def self.getFrameTimeSeconds():float
+    @@delta
+  end
+  
+  def self.getCurrentTime():long
+    begin
       return long(glfwGetTime() * long(1000))
     rescue
       puts "Failed to getCurrentTime"
       return long(0)
     end
-	end
+  end
 
   def self.updateWH():void
     tmpW = IntBuffer(BufferUtils.createIntBuffer(1))

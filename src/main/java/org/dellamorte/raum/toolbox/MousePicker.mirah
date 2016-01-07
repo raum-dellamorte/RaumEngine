@@ -22,10 +22,10 @@ import org.dellamorte.raum.toolbox.vector.Vector4f
  * @author Raum
  */
 class MousePicker 
-	def self.recursionCount():int; 200; end
-	def self.rayRange():float; float(600); end
+  def self.recursionCount():int; 200; end
+  def self.rayRange():float; float(600); end
   
-	def initialize(camera:Camera, projection:Matrix4f, terrains:TerrainList):void
+  def initialize(camera:Camera, projection:Matrix4f, terrains:TerrainList):void
     @cam = camera
     @pMatrix = projection
     @vMatrix = Maths.createViewMatrix(@cam)
@@ -33,10 +33,10 @@ class MousePicker
     @curRay = Vector3f(nil)
     @curTerrainPoint = Vector3f(nil)
   end
-	
-	def getCurrentTerrainPoint():Vector3f
-		@curTerrainPoint
-	end
+  
+  def getCurrentTerrainPoint():Vector3f
+    @curTerrainPoint
+  end
   
   def getCurrentRay():Vector3f
     @curRay
@@ -45,11 +45,11 @@ class MousePicker
   def update():void
     @vMatrix = Maths.createViewMatrix(@cam)
     @curRay = calcMouseRay()
-		if (intersectionInRange(0, MousePicker.rayRange(), @curRay))
-			currentTerrainPoint = binarySearch(0, 0, MousePicker.rayRange(), @curRay)
-		else
-			currentTerrainPoint = nil
-		end
+    if (intersectionInRange(0, MousePicker.rayRange(), @curRay))
+      currentTerrainPoint = binarySearch(0, 0, MousePicker.rayRange(), @curRay)
+    else
+      currentTerrainPoint = nil
+    end
   end
   
   def calcMouseRay():Vector3f
@@ -81,38 +81,38 @@ class MousePicker
   end
   
   def getPointOnRay(ray:Vector3f, distance:float):Vector3f
-		camPos = @cam.getPosition()
-		start = Vector3f.new(camPos.x, camPos.y, camPos.z)
-		scaledRay = Vector3f.new(ray.x * distance, ray.y * distance, ray.z * distance)
-		return Vector3f.add(start, scaledRay, nil)
-	end
-	
-	def binarySearch(count:int, start:float, finish:float, ray:Vector3f):Vector3f
-		half = float(start + ((finish - start) / float(2)))
-		if (count >= MousePicker.recursionCount())
-			endPoint = getPointOnRay(ray, half)
-			terrain = getTerrain(endPoint.x, endPoint.z)
-			return ((terrain != nil) ? endPoint : nil)
-		end
-		return ((intersectionInRange(start, half, ray)) ? 
+    camPos = @cam.getPosition()
+    start = Vector3f.new(camPos.x, camPos.y, camPos.z)
+    scaledRay = Vector3f.new(ray.x * distance, ray.y * distance, ray.z * distance)
+    return Vector3f.add(start, scaledRay, nil)
+  end
+  
+  def binarySearch(count:int, start:float, finish:float, ray:Vector3f):Vector3f
+    half = float(start + ((finish - start) / float(2)))
+    if (count >= MousePicker.recursionCount())
+      endPoint = getPointOnRay(ray, half)
+      terrain = getTerrain(endPoint.x, endPoint.z)
+      return ((terrain != nil) ? endPoint : nil)
+    end
+    return ((intersectionInRange(start, half, ray)) ? 
       binarySearch(count + 1, start, half, ray) : binarySearch(count + 1, half, finish, ray))
-	end
+  end
 
-	def intersectionInRange(start:float, finish:float, ray:Vector3f):boolean
-		startPoint = getPointOnRay(ray, start)
-		endPoint = getPointOnRay(ray, finish)
-		return (!isUnderGround(startPoint) and isUnderGround(endPoint))
-	end
+  def intersectionInRange(start:float, finish:float, ray:Vector3f):boolean
+    startPoint = getPointOnRay(ray, start)
+    endPoint = getPointOnRay(ray, finish)
+    return (!isUnderGround(startPoint) and isUnderGround(endPoint))
+  end
 
-	def isUnderGround(testPoint:Vector3f):boolean
-		terrain = Terrain(getTerrain(testPoint.x, testPoint.z))
-		height = float(0.0)
-		height = terrain.getHeightOfTerrain(testPoint.x(), testPoint.z()) if (terrain != nil)
-		return (testPoint.y < height)
-	end
+  def isUnderGround(testPoint:Vector3f):boolean
+    terrain = Terrain(getTerrain(testPoint.x, testPoint.z))
+    height = float(0.0)
+    height = terrain.getHeightOfTerrain(testPoint.x(), testPoint.z()) if (terrain != nil)
+    return (testPoint.y < height)
+  end
 
-	def getTerrain(worldX:float, worldZ:float):Terrain
+  def getTerrain(worldX:float, worldZ:float):Terrain
     @terrs.getTerrainAt(worldX, worldZ)
-	end
+  end
 end
 

@@ -11,20 +11,20 @@ package org.dellamorte.raum.models
  * @author Raum
  */
 class RawModel 
-	#@@vaoID = 0
-	#@@vertexCount = 0
-	
-	def initialize(vaoID:int, vertexCount:int)
-		@vaoID = vaoID
-		@vertexCount = vertexCount
-	end
-	
-	def getVaoID():int
-		@vaoID
-	end
-	
-	def getVertexCount():int
-		@vertexCount
-	end
+  #@@vaoID = 0
+  #@@vertexCount = 0
+  
+  def initialize(vaoID:int, vertexCount:int)
+    @vaoID = vaoID
+    @vertexCount = vertexCount
+  end
+  
+  def getVaoID():int
+    @vaoID
+  end
+  
+  def getVertexCount():int
+    @vertexCount
+  end
 end
 

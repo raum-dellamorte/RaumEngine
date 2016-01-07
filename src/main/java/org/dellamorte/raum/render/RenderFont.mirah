@@ -1,4 +1,4 @@
-package org.dellamorte.raum.engine
+package org.dellamorte.raum.render
 
 import org.dellamorte.raum.shaders.Shader0
 import org.dellamorte.raum.shaders.ShaderFont
@@ -11,9 +11,9 @@ import org.lwjgl.opengl.GL30
 import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL13
 
-class FontRenderer
+class RenderFont
   def initialize():void
-    @shader = ShaderFont.new()
+    @shdr = ShaderFont.new()
   end
   
   def render(texts:FontTypeToGUITextListMap):void
@@ -27,24 +27,32 @@ class FontRenderer
     end
     endRendering()
   end
+  
+  def shader():ShaderFont
+    @shdr
+  end
+  
+  def shader0():Shader0
+    Shader0(@shdr)
+  end
 
   def cleanUp():void
-    Shader0(@shader).cleanUp()
+    shader0.cleanUp()
   end
 
   def prepare():void
     GL11.glEnable(GL11.GL_BLEND)
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
     GL11.glDisable(GL11.GL_DEPTH_TEST)
-    Shader0(@shader).start
+    shader0.start
   end
 
   def renderText(text:GUIText):void
     GL30.glBindVertexArray(text.getMesh)
     GL20.glEnableVertexAttribArray(0)
     GL20.glEnableVertexAttribArray(1)
-    @shader.loadColour(text.getColour())
-    @shader.loadTranslation(text.getPosition())
+    shader.loadColour(text.getColour())
+    shader.loadTranslation(text.getPosition())
     GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, text.getVertexCount())
     GL20.glDisableVertexAttribArray(0)
     GL20.glDisableVertexAttribArray(1)
@@ -52,7 +60,7 @@ class FontRenderer
   end
 
   def endRendering():void
-    Shader0(@shader).stop
+    shader0.stop
     GL11.glDisable(GL11.GL_BLEND)
     GL11.glEnable(GL11.GL_DEPTH_TEST)
   end

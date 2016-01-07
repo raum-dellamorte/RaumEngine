@@ -14,40 +14,40 @@ import org.dellamorte.raum.models.TexturedModel
  * @author Raum
  */
 class TModelBox 
-	def initialize(texturedModel:TexturedModel):void
-		@tmodel = texturedModel
-		clear()
-	end
-	
-	def clear():void
-		@x = Entity[0]
-	end
-	
-	def model():TexturedModel
-		@tmodel
-	end
-	
-	def get(i:int):Entity
-		return @x[i] if ((i > -1) and (i < @x.length()))
-		return Entity(nil)
-	end
+  def initialize(texturedModel:TexturedModel):void
+    @tmodel = texturedModel
+    clear()
+  end
+  
+  def clear():void
+    @x = Entity[0]
+  end
+  
+  def model():TexturedModel
+    @tmodel
+  end
+  
+  def get(i:int):Entity
+    return @x[i] if ((i > -1) and (i < @x.length()))
+    return Entity(nil)
+  end
 
-	def add(v3:Entity):void
-		tmp = Entity[@x.length() + 1]
-		@x.length().times do |i:int|
-			tmp[i] = @x[i]
-		end
-		tmp[@x.length()] = v3
-		@x = tmp
-	end
-	
-	def size():int
-		@x.length()
-	end
-	
-	def array():Entity[]
-		@x
-	end
-	
+  def add(v3:Entity):void
+    tmp = Entity[@x.length() + 1]
+    @x.length().times do |i:int|
+      tmp[i] = @x[i]
+    end
+    tmp[@x.length()] = v3
+    @x = tmp
+  end
+  
+  def size():int
+    @x.length()
+  end
+  
+  def array():Entity[]
+    @x
+  end
+  
 end
 

@@ -11,6 +11,6 @@ package org.dellamorte.raum.toolbox
  * @author Raum
  */
 interface Block do
-	def run():void; end
+  def run():void; end
 end
 

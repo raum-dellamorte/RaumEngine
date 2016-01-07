@@ -27,63 +27,63 @@ import org.lwjgl.opengl.GL20
  * @author Raum
  */
 class ShaderModel < Shader0
-	@@vFile = "res/opengl/vertexShader.txt"
-	@@fFile = "res/opengl/fragmentShader.txt"
-	@@maxLights = 4
+  @@vFile = "res/opengl/vertexShader.txt"
+  @@fFile = "res/opengl/fragmentShader.txt"
+  @@maxLights = 4
   
-	def initialize():void
-		super(@@vFile, @@fFile)
-		puts "new ShaderOne"
-	end
-	
-	$Override
-	def bindAttributes():void
-		#puts "bindAttributes " + programID()
-		bindAttribute(0, "position")
-		bindAttribute(1, "textureCoords")
-	end
-	
-	$Override
-	def getAllUniformLocations():void
-		newLoc("transformationMatrix")
-		newLoc("projectionMatrix")
-		newLoc("viewMatrix")
-		newLoc("shineDamper")
-		newLoc("reflectivity")
-		newLoc("useFakeLighting")
-		newLoc("skyColour")
-		newLoc("numOfRows")
-		newLoc("offset")
+  def initialize():void
+    super(@@vFile, @@fFile)
+    puts "new ShaderOne"
+  end
+  
+  $Override
+  def bindAttributes():void
+    #puts "bindAttributes " + programID()
+    bindAttribute(0, "position")
+    bindAttribute(1, "textureCoords")
+  end
+  
+  $Override
+  def getAllUniformLocations():void
+    newLoc("transformationMatrix")
+    newLoc("projectionMatrix")
+    newLoc("viewMatrix")
+    newLoc("shineDamper")
+    newLoc("reflectivity")
+    newLoc("useFakeLighting")
+    newLoc("skyColour")
+    newLoc("numOfRows")
+    newLoc("offset")
     @@maxLights.times do |i:int|
       newLoc("lightPosition[" + i + "]")
       newLoc("lightColour[" + i + "]")
       newLoc("attenuation[" + i + "]")
     end
-	end
-	
-	def loadNumberOfRows(val:int)
-		loadFloat(getLoc("numOfRows"), float(val))
-	end
-	
-	def loadOffset(x:float, y:float):void
-		load2DVector(getLoc("offset"), Vector2f.new(x,y))
-	end
-	
-	def loadSkyColour(r:float, g:float, b:float):void
-		loadVector(getLoc("skyColour"), Vector3f.new(r,g,b))
-	end
-	
-	def loadFakeLightingVariable(bool:boolean):void
-		loadBoolean(getLoc("useFakeLighting"), bool)
-	end
-	
-	def loadShineVariables(damper:float, reflectivity:float)
-		loadFloat(getLoc("shineDamper"), damper)
-		loadFloat(getLoc("reflectivity"), reflectivity)
-	end
-	
-	def loadLights(lights:Light[])
-		l = lights.length()
+  end
+  
+  def loadNumberOfRows(val:int)
+    loadFloat(getLoc("numOfRows"), float(val))
+  end
+  
+  def loadOffset(x:float, y:float):void
+    load2DVector(getLoc("offset"), Vector2f.new(x,y))
+  end
+  
+  def loadSkyColour(r:float, g:float, b:float):void
+    loadVector(getLoc("skyColour"), Vector3f.new(r,g,b))
+  end
+  
+  def loadFakeLightingVariable(bool:boolean):void
+    loadBoolean(getLoc("useFakeLighting"), bool)
+  end
+  
+  def loadShineVariables(damper:float, reflectivity:float)
+    loadFloat(getLoc("shineDamper"), damper)
+    loadFloat(getLoc("reflectivity"), reflectivity)
+  end
+  
+  def loadLights(lights:Light[])
+    l = lights.length()
     @@maxLights.times do |i:int|
       if (i < l)
         loadVector(getLoc("lightPosition[" + i + "]"), lights[i].getPosition())
@@ -95,19 +95,19 @@ class ShaderModel < Shader0
         loadVector(getLoc("attenuation[" + i + "]"), Vector3f.new(float(1.0),0,0))
       end
     end
-	end
-	
-	def loadTransformationMatrix(matrix:Matrix4f):void
-		loadMatrix(getLoc("transformationMatrix"), matrix)
-	end
-	
-	def loadViewMatrix(camera:Camera):void
-		viewMatrix = Maths.createViewMatrix(camera)
-		loadMatrix(getLoc("viewMatrix"), viewMatrix)
-	end
-	
-	def loadProjectionMatrix(matrix:Matrix4f):void
-		loadMatrix(getLoc("projectionMatrix"), matrix)
-	end
+  end
+  
+  def loadTransformationMatrix(matrix:Matrix4f):void
+    loadMatrix(getLoc("transformationMatrix"), matrix)
+  end
+  
+  def loadViewMatrix(camera:Camera):void
+    viewMatrix = Maths.createViewMatrix(camera)
+    loadMatrix(getLoc("viewMatrix"), viewMatrix)
+  end
+  
+  def loadProjectionMatrix(matrix:Matrix4f):void
+    loadMatrix(getLoc("projectionMatrix"), matrix)
+  end
 end
 

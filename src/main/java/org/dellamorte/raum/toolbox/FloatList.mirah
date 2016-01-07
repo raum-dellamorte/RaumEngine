@@ -11,30 +11,30 @@ package org.dellamorte.raum.toolbox
  * @author Raum
  */
 class FloatList
-	def initialize():void
-		@x = Float[0]
-	end
+  def initialize():void
+    @x = Float[0]
+  end
 
-	def get(i:int):Float
-		return @x[i] if ((i > -1) and (i < @x.length()))
-		return Float(nil)
-	end
+  def get(i:int):Float
+    return @x[i] if ((i > -1) and (i < @x.length()))
+    return Float(nil)
+  end
 
-	def add(lt:Float):void
-		tmp = Float[@x.length() + 1]
-		@x.length().times do |i:int|
-			tmp[i] = @x[i]
-		end
-		tmp[@x.length()] = lt
-		@x = tmp
-	end
-	
-	def size():int
-		@x.length()
-	end
-	
-	def array():Float[]
-		@x
-	end
+  def add(lt:Float):void
+    tmp = Float[@x.length() + 1]
+    @x.length().times do |i:int|
+      tmp[i] = @x[i]
+    end
+    tmp[@x.length()] = lt
+    @x = tmp
+  end
+  
+  def size():int
+    @x.length()
+  end
+  
+  def array():Float[]
+    @x
+  end
 end
 

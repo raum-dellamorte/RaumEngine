@@ -24,61 +24,61 @@ import org.lwjgl.opengl.GL20
  * @author Raum
  */
 class ShaderTerrain < Shader0
-	@@vFile = "res/opengl/terrainVertexShader.txt"
-	@@fFile = "res/opengl/terrainFragmentShader.txt"
-	@@maxLights = 4
+  @@vFile = "res/opengl/terrainVertexShader.txt"
+  @@fFile = "res/opengl/terrainFragmentShader.txt"
+  @@maxLights = 4
   
-	def initialize():void
-		super(@@vFile, @@fFile)
-		puts "new TerrainShader"
-	end
-	
-	$Override
-	def bindAttributes():void
-		puts "bindAttributes " + programID()
-		bindAttribute(0, "position")
-		bindAttribute(1, "textureCoords")
-	end
-	
-	$Override
-	def getAllUniformLocations():void
-		newLoc("transformationMatrix")
-		newLoc("projectionMatrix")
-		newLoc("viewMatrix")
-		newLoc("shineDamper")
-		newLoc("reflectivity")
-		newLoc("skyColour")
-		newLoc("bgTexture")
-		newLoc("rTexture")
-		newLoc("gTexture")
-		newLoc("bTexture")
-		newLoc("blendMap")
+  def initialize():void
+    super(@@vFile, @@fFile)
+    puts "new TerrainShader"
+  end
+  
+  $Override
+  def bindAttributes():void
+    puts "bindAttributes " + programID()
+    bindAttribute(0, "position")
+    bindAttribute(1, "textureCoords")
+  end
+  
+  $Override
+  def getAllUniformLocations():void
+    newLoc("transformationMatrix")
+    newLoc("projectionMatrix")
+    newLoc("viewMatrix")
+    newLoc("shineDamper")
+    newLoc("reflectivity")
+    newLoc("skyColour")
+    newLoc("bgTexture")
+    newLoc("rTexture")
+    newLoc("gTexture")
+    newLoc("bTexture")
+    newLoc("blendMap")
     @@maxLights.times do |i:int|
       newLoc("lightPosition[" + i + "]")
       newLoc("lightColour[" + i + "]")
       newLoc("attenuation[" + i + "]")
     end
-	end
-	
-	def connectTextureUnits():void
-		loadInt(getLoc("bgTexture"), 0)
-		loadInt(getLoc("rTexture"), 1)
-		loadInt(getLoc("gTexture"), 2)
-		loadInt(getLoc("bTexture"), 3)
-		loadInt(getLoc("blendMap"), 4)
-	end
-	
-	def loadSkyColour(r:float, g:float, b:float):void
-		loadVector(getLoc("skyColour"), Vector3f.new(r,g,b))
-	end
-	
-	def loadShineVariables(damper:float, reflectivity:float)
-		loadFloat(getLoc("shineDamper"), damper)
-		loadFloat(getLoc("reflectivity"), reflectivity)
-	end
-	
-	def loadLights(lights:Light[])
-		l = lights.length()
+  end
+  
+  def connectTextureUnits():void
+    loadInt(getLoc("bgTexture"), 0)
+    loadInt(getLoc("rTexture"), 1)
+    loadInt(getLoc("gTexture"), 2)
+    loadInt(getLoc("bTexture"), 3)
+    loadInt(getLoc("blendMap"), 4)
+  end
+  
+  def loadSkyColour(r:float, g:float, b:float):void
+    loadVector(getLoc("skyColour"), Vector3f.new(r,g,b))
+  end
+  
+  def loadShineVariables(damper:float, reflectivity:float)
+    loadFloat(getLoc("shineDamper"), damper)
+    loadFloat(getLoc("reflectivity"), reflectivity)
+  end
+  
+  def loadLights(lights:Light[])
+    l = lights.length()
     @@maxLights.times do |i:int|
       if (i < l)
         loadVector(getLoc("lightPosition[" + i + "]"), lights[i].getPosition())
@@ -90,19 +90,19 @@ class ShaderTerrain < Shader0
         loadVector(getLoc("attenuation[" + i + "]"), Vector3f.new(float(1.0),0,0))
       end
     end
-	end
-	
-	def loadTransformationMatrix(matrix:Matrix4f):void
-		loadMatrix(getLoc("transformationMatrix"), matrix)
-	end
-	
-	def loadViewMatrix(camera:Camera):void
-		viewMatrix = Maths.createViewMatrix(camera)
-		loadMatrix(getLoc("viewMatrix"), viewMatrix)
-	end
-	
-	def loadProjectionMatrix(matrix:Matrix4f):void
-		loadMatrix(getLoc("projectionMatrix"), matrix)
-	end
+  end
+  
+  def loadTransformationMatrix(matrix:Matrix4f):void
+    loadMatrix(getLoc("transformationMatrix"), matrix)
+  end
+  
+  def loadViewMatrix(camera:Camera):void
+    viewMatrix = Maths.createViewMatrix(camera)
+    loadMatrix(getLoc("viewMatrix"), viewMatrix)
+  end
+  
+  def loadProjectionMatrix(matrix:Matrix4f):void
+    loadMatrix(getLoc("projectionMatrix"), matrix)
+  end
 end
 

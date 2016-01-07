@@ -12,30 +12,30 @@ import org.dellamorte.raum.entities.Light
  * @author Raum
  */
 class LightList 
-	def initialize():void
-		@x = Light[0]
-	end
+  def initialize():void
+    @x = Light[0]
+  end
 
-	def get(i:int):Light
-		return @x[i] if ((i > -1) and (i < @x.length()))
-		return Light(nil)
-	end
+  def get(i:int):Light
+    return @x[i] if ((i > -1) and (i < @x.length()))
+    return Light(nil)
+  end
 
-	def add(lt:Light):void
-		tmp = Light[@x.length() + 1]
-		@x.length().times do |i:int|
-			tmp[i] = @x[i]
-		end
-		tmp[@x.length()] = lt
-		@x = tmp
-	end
-	
-	def size():int
-		@x.length()
-	end
-	
-	def array():Light[]
-		@x
-	end
+  def add(lt:Light):void
+    tmp = Light[@x.length() + 1]
+    @x.length().times do |i:int|
+      tmp[i] = @x[i]
+    end
+    tmp[@x.length()] = lt
+    @x = tmp
+  end
+  
+  def size():int
+    @x.length()
+  end
+  
+  def array():Light[]
+    @x
+  end
 end
 

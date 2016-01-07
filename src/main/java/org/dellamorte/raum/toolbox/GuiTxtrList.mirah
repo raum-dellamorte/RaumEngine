@@ -5,38 +5,38 @@
  */
 
 package org.dellamorte.raum.toolbox
-import org.dellamorte.raum.guis.GuiTexture
 
+import org.dellamorte.raum.textures.TextureGui as MyListItem
 
 /**
  *
  * @author Raum
  */
 class GuiTxtrList 
-	def initialize():void
-		@x = GuiTexture[0]
-	end
+  def initialize():void
+    @x = MyListItem[0]
+  end
 
-	def get(i:int):GuiTexture
-		return @x[i] if ((i > -1) and (i < @x.length()))
-		return GuiTexture(nil)
-	end
+  def get(i:int):MyListItem
+    return @x[i] if ((i > -1) and (i < @x.length()))
+    return MyListItem(nil)
+  end
 
-	def add(v3:GuiTexture):void
-		tmp = GuiTexture[@x.length() + 1]
-		@x.length().times do |i:int|
-			tmp[i] = @x[i]
-		end
-		tmp[@x.length()] = v3
-		@x = tmp
-	end
-	
-	def size():int
-		@x.length()
-	end
-	
-	def array():GuiTexture[]
-		@x
-	end
+  def add(itm:MyListItem):void
+    tmp = MyListItem[@x.length() + 1]
+    @x.length().times do |i:int|
+      tmp[i] = @x[i]
+    end
+    tmp[@x.length()] = itm
+    @x = tmp
+  end
+  
+  def size():int
+    @x.length()
+  end
+  
+  def array():MyListItem[]
+    @x
+  end
 end
 

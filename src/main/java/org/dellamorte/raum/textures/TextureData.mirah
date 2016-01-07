@@ -13,22 +13,22 @@ import java.nio.ByteBuffer
  * @author Raum
  */
 class TextureData 
-	def initialize(buffer:ByteBuffer, width:int, height:int):void
-		@buff = buffer
-		@w = width
-		@h = height
-	end
-	
-	def getWidth():int
-		return @w
-	end
-	
-	def getHeight():int
-		return @h
-	end
-	
-	def getBuffer():ByteBuffer
-		return @buff
-	end
+  def initialize(buffer:ByteBuffer, width:int, height:int):void
+    @buff = buffer
+    @w = width
+    @h = height
+  end
+  
+  def getWidth():int
+    return @w
+  end
+  
+  def getHeight():int
+    return @h
+  end
+  
+  def getBuffer():ByteBuffer
+    return @buff
+  end
 end
 

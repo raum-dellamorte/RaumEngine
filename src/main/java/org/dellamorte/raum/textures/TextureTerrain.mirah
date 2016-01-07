@@ -10,13 +10,13 @@ package org.dellamorte.raum.textures
  *
  * @author Raum
  */
-class TerrainTexture 
-	def initialize(id:int):void
-		@ttid = id
-	end
-	
-	def getID():int
-		@ttid
-	end
+class TextureTerrain 
+  def initialize(id:int):void
+    @ttid = id
+  end
+  
+  def getID():int
+    @ttid
+  end
 end
 

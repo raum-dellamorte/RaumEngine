@@ -16,7 +16,7 @@ import java.nio.IntBuffer
  * @author Raum
  */
 class Image 
-	attr_reader image:ByteBuffer
+  attr_reader image:ByteBuffer
   attr_reader width:int
   attr_reader height:int
   attr_reader components:int

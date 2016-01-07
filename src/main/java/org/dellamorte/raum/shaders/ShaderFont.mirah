@@ -17,33 +17,33 @@ import org.lwjgl.opengl.GL20
 
 class ShaderFont < Shader0
   
-	def self.VERTEX_FILE():String; "res/opengl/fontVertex.txt"; end
-	def self.FRAGMENT_FILE():String; "res/opengl/fontFragment.txt"; end
-	
-	def initialize():void
-		super(VERTEX_FILE(), FRAGMENT_FILE())
+  def self.VERTEX_FILE():String; "res/opengl/fontVertex.txt"; end
+  def self.FRAGMENT_FILE():String; "res/opengl/fontFragment.txt"; end
+  
+  def initialize():void
+    super(VERTEX_FILE(), FRAGMENT_FILE())
     puts "new FontShader"
   end
   
-	$Override
-	def getAllUniformLocations():void
+  $Override
+  def getAllUniformLocations():void
     newLoc("translation")
     newLoc("colour")
   end
   
-	$Override
-	def bindAttributes():void
+  $Override
+  def bindAttributes():void
     bindAttribute(0, "position")
-		bindAttribute(1, "textureCoords")
+    bindAttribute(1, "textureCoords")
   end
-	
-	def loadColour(colour:Vector3f):void
-		loadVector(getLoc("colour"), colour)
-	end
-	
-	def loadTranslation(translation:Vector2f):void
-		load2DVector(getLoc("translation"), translation)
-	end
+  
+  def loadColour(colour:Vector3f):void
+    loadVector(getLoc("colour"), colour)
+  end
+  
+  def loadTranslation(translation:Vector2f):void
+    load2DVector(getLoc("translation"), translation)
+  end
   
   
 end

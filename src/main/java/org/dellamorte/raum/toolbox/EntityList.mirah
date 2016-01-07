@@ -13,30 +13,30 @@ import org.dellamorte.raum.entities.Entity
  * @author Raum
  */
 class EntityList 
-	def initialize():void
-		@x = Entity[0]
-	end
+  def initialize():void
+    @x = Entity[0]
+  end
 
-	def get(i:int):Entity
-		return @x[i] if ((i > -1) and (i < @x.length()))
-		return Entity(nil)
-	end
+  def get(i:int):Entity
+    return @x[i] if ((i > -1) and (i < @x.length()))
+    return Entity(nil)
+  end
 
-	def add(entity:Entity):void
-		tmp = Entity[@x.length() + 1]
-		@x.length().times do |i:int|
-			tmp[i] = @x[i]
-		end
-		tmp[@x.length()] = entity
-		@x = tmp
-	end
-	
-	def size():int
-		@x.length()
-	end
-	
-	def array():Entity[]
-		@x
-	end
+  def add(entity:Entity):void
+    tmp = Entity[@x.length() + 1]
+    @x.length().times do |i:int|
+      tmp[i] = @x[i]
+    end
+    tmp[@x.length()] = entity
+    @x = tmp
+  end
+  
+  def size():int
+    @x.length()
+  end
+  
+  def array():Entity[]
+    @x
+  end
 end
 

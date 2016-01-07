@@ -5,12 +5,12 @@
  */
 
 package org.dellamorte.raum.engine
-import org.dellamorte.raum.guis.GuiRenderer
-import org.dellamorte.raum.terrains.Terrain
 import org.dellamorte.raum.entities.Entity
-import org.dellamorte.raum.toolbox.vector.Vector3f
 import org.dellamorte.raum.entities.StatusBar
-import org.dellamorte.raum.guis.GuiTexture
+import org.dellamorte.raum.render.RenderGui
+import org.dellamorte.raum.terrains.Terrain
+import org.dellamorte.raum.textures.TextureGui
+import org.dellamorte.raum.toolbox.vector.Vector3f
 
 
 /**
@@ -18,7 +18,7 @@ import org.dellamorte.raum.guis.GuiTexture
  * @author Raum
  */
 class MainGameLoop 
-	def self.main(args:String[]):void
+  def self.main(args:String[]):void
     DisplayMgr.init()
     DisplayMgr.setBGColor(0.0, 0.0, 0.0, 0.0)
     
@@ -45,12 +45,12 @@ class MainGameLoop
                    2.0, 0.0, 0.0,
                    1.0, 0.01, 0.002)
     
-    gui = mload.getGuiTexture("HealthMeter", -0.73, 0.82, 0.25, 0.25)
-    guis = GuiTexture[3]
-    guis[0] = mload.getGuiTexture("HealthBarBG", -0.73, 0.82, 0.25, 0.25)
-    guis[1] = mload.getGuiTexture("HealthBarFG", -0.73, 0.82, 0.25, 0.25)
-    guis[2] = mload.getGuiTexture("HealthMeter", -0.73, 0.82, 0.25, 0.25)
-    guiRend = GuiRenderer.new(mload.loader)
+    gui = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
+    guis = TextureGui[3]
+    guis[0] = mload.getTextureGui("HealthBarBG", -0.73, 0.82, 0.25, 0.25)
+    guis[1] = mload.getTextureGui("HealthBarFG", -0.73, 0.82, 0.25, 0.25)
+    guis[2] = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
+    guiRend = RenderGui.new(mload.loader)
     
     #testGuiStrings = GuiString[1]
     #testGuiStrings[0] = mload.getGuiString("Hello World", -0.94, 0.88, 50)
@@ -58,8 +58,8 @@ class MainGameLoop
     guiString = mload.getGUIText("Hello World", "candara", 2.5, 0.016, 0.02, 0.24, true)
     TextMgr.loadText(guiString)
     
-    terrainTexture = mload.genTerrainTexturePack("grassy2", "mud", "mytexture", "path")
-    bmap = mload.genTerrainTexture("blendMap")
+    terrainTexture = mload.genTexturePackTerrain("grassy2", "mud", "mytexture", "path")
+    bmap = mload.genTextureTerrain("blendMap")
     mload.addTerrain(Terrain.new( 0,-1, mload.loader, terrainTexture, bmap, "heightmap"))
     mload.addTerrain(Terrain.new(-1,-1, mload.loader, terrainTexture, bmap, "heightmap"))
     

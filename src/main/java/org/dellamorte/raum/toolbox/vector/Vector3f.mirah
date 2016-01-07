@@ -48,30 +48,30 @@ class Vector3f < Vector
   attr_accessor y:float
   attr_accessor z:float
   /**
-	 * Constructor for Vector3f.
-	 **/
+   * Constructor for Vector3f.
+   **/
   def initialize():void
     super()
   end
   
   /**
-	 * Constructor
-	 **/
+   * Constructor
+   **/
   def initialize(x:float, y:float, z:float):void
     set(x, y, z)
   end
   
   /* (non-Javadoc)
-	 * @see org.lwjgl.util.vector.WritableVector2f#set(float, float)
-	 **/
+   * @see org.lwjgl.util.vector.WritableVector2f#set(float, float)
+   **/
   def set(x:float, y:float):void
     @x = x
     @y = y
   end
   
   /* (non-Javadoc)
-	 * @see org.lwjgl.util.vector.WritableVector3f#set(float, float, float)
-	 **/
+   * @see org.lwjgl.util.vector.WritableVector3f#set(float, float, float)
+   **/
   def set(x:float, y:float, z:float):void
     @x = x
     @y = y
@@ -79,18 +79,18 @@ class Vector3f < Vector
   end
   
   /**
-	 * @return the length squared of the vector
-	 **/
+   * @return the length squared of the vector
+   **/
   def lengthSquared():float
     return @x * @x + @y * @y + @z * @z
   end
   
   /**
-	 * Translate a vector
-	 * @param x The translation in x
-	 * @param y the translation in y
-	 * @return this
-	 **/
+   * Translate a vector
+   * @param x The translation in x
+   * @param y the translation in y
+   * @return this
+   **/
   def translate(x:float, y:float, z:float):Vector3f
     @x += x
     @y += y
@@ -99,13 +99,13 @@ class Vector3f < Vector
   end
   
   /**
-	 * Add a vector to another vector and place the result in a destination
-	 * vector.
-	 * @param left The LHS vector
-	 * @param right The RHS vector
-	 * @param dest The destination vector, or null if a new vector is to be created
-	 * @return the sum of left and right in dest
-	 **/
+   * Add a vector to another vector and place the result in a destination
+   * vector.
+   * @param left The LHS vector
+   * @param right The RHS vector
+   * @param dest The destination vector, or null if a new vector is to be created
+   * @return the sum of left and right in dest
+   **/
   def self.add(left:Vector3f, right:Vector3f, dest:Vector3f):Vector3f
     if (dest == nil)
       return Vector3f.new(left.x + right.x, left.y + right.y, left.z + right.z)
@@ -116,13 +116,13 @@ class Vector3f < Vector
   end
   
   /**
-	 * Subtract a vector from another vector and place the result in a destination
-	 * vector.
-	 * @param left The LHS vector
-	 * @param right The RHS vector
-	 * @param dest The destination vector, or null if a new vector is to be created
-	 * @return left minus right in dest
-	 **/
+   * Subtract a vector from another vector and place the result in a destination
+   * vector.
+   * @param left The LHS vector
+   * @param right The RHS vector
+   * @param dest The destination vector, or null if a new vector is to be created
+   * @return left minus right in dest
+   **/
   def self.sub(left:Vector3f, right:Vector3f, dest:Vector3f):Vector3f
     if (dest == nil)
       return Vector3f.new(left.x - right.x, left.y - right.y, left.z - right.z)
@@ -133,13 +133,13 @@ class Vector3f < Vector
   end
   
   /**
-	 * The cross product of two vectors.
-	 *
-	 * @param left The LHS vector
-	 * @param right The RHS vector
-	 * @param dest The destination result, or null if a new vector is to be created
-	 * @return left cross right
-	 **/
+   * The cross product of two vectors.
+   *
+   * @param left The LHS vector
+   * @param right The RHS vector
+   * @param dest The destination result, or null if a new vector is to be created
+   * @return left cross right
+   **/
   def self.cross(left:Vector3f, right:Vector3f, dest:Vector3f):Vector3f
     dest = Vector3f.new() if (dest == nil)
     dest.set( left.y * right.z - left.z * right.y, right.x * left.z - right.z * left.x, left.x * right.y - left.y * right.x )
@@ -147,9 +147,9 @@ class Vector3f < Vector
   end
   
   /**
-	 * Negate a vector
-	 * @return this
-	 **/
+   * Negate a vector
+   * @return this
+   **/
   def negate():Vector
     @x = -@x
     @y = -@y
@@ -158,10 +158,10 @@ class Vector3f < Vector
   end
   
   /**
-	 * Negate a vector and place the result in a destination vector.
-	 * @param dest The destination vector or null if a new vector is to be created
-	 * @return the negated vector
-	 **/
+   * Negate a vector and place the result in a destination vector.
+   * @param dest The destination vector or null if a new vector is to be created
+   * @return the negated vector
+   **/
   def negate(dest:Vector3f):Vector3f
     dest = Vector3f.new() if (dest == nil)
     dest.x = -@x
@@ -171,10 +171,10 @@ class Vector3f < Vector
   end
   
   /**
-	 * Normalise this vector and place the result in another vector.
-	 * @param dest The destination vector, or null if a new vector is to be created
-	 * @return the normalised vector
-	 **/
+   * Normalise this vector and place the result in another vector.
+   * @param dest The destination vector, or null if a new vector is to be created
+   * @return the normalised vector
+   **/
   def normalize(dest:Vector3f):Vector3f
     l = Vector(self).length()
     if (dest == nil)
@@ -186,22 +186,22 @@ class Vector3f < Vector
   end
   
   /**
-	 * The dot product of two vectors is calculated as
-	 * v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
-	 * @param left The LHS vector
-	 * @param right The RHS vector
-	 * @return left dot right
-	 **/
+   * The dot product of two vectors is calculated as
+   * v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
+   * @param left The LHS vector
+   * @param right The RHS vector
+   * @return left dot right
+   **/
   def self.dot(left:Vector3f, right:Vector3f):float
     return left.x * right.x + left.y * right.y + left.z * right.z
   end
   
   /**
-	 * Calculate the angle between two vectors, in radians
-	 * @param a A vector
-	 * @param b The other vector
-	 * @return the angle between the two vectors, in radians
-	 **/
+   * Calculate the angle between two vectors, in radians
+   * @param a A vector
+   * @param b The other vector
+   * @return the angle between the two vectors, in radians
+   **/
   def self.angle(a:Vector3f, b:Vector3f):float
     dls = float(dot(a, b) / (Vector(a).length() * Vector(b).length()))
     if (dls < -float(1.0))
@@ -213,8 +213,8 @@ class Vector3f < Vector
   end
   
   /* (non-Javadoc)
-	 * @see org.lwjgl.vector.Vector#load(FloatBuffer)
-	 **/
+   * @see org.lwjgl.vector.Vector#load(FloatBuffer)
+   **/
   def load(buf:FloatBuffer):Vector
     x = buf.get()
     y = buf.get()
@@ -223,8 +223,8 @@ class Vector3f < Vector
   end
   
   /* (non-Javadoc)
-	 * @see org.lwjgl.vector.Vector#scale(float)
-	 **/
+   * @see org.lwjgl.vector.Vector#scale(float)
+   **/
   def scale(scale:float):Vector
     @x *= scale
     @y *= scale
@@ -233,8 +233,8 @@ class Vector3f < Vector
   end
   
   /* (non-Javadoc)
-	 * @see org.lwjgl.vector.Vector#store(FloatBuffer)
-	 **/
+   * @see org.lwjgl.vector.Vector#store(FloatBuffer)
+   **/
   def store(buf:FloatBuffer):Vector
     buf.put(x)
     buf.put(y)
@@ -243,8 +243,8 @@ class Vector3f < Vector
   end
   
   /* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 **/
+   * @see java.lang.Object#toString()
+   **/
   def toString():String
     sb = StringBuilder(StringBuilder.new(64))
     sb.append("Vector3f[")

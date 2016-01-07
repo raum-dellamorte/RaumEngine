@@ -6,7 +6,7 @@
 
 package org.dellamorte.raum.engine
 
-import org.dellamorte.raum.engine.FontRenderer
+import org.dellamorte.raum.render.RenderFont
 import org.dellamorte.raum.engine.Loader
 import org.dellamorte.raum.toolbox.fontMeshCreator.FontType
 import org.dellamorte.raum.toolbox.fontMeshCreator.FontTypeToGUITextListMap
@@ -19,9 +19,9 @@ import org.dellamorte.raum.toolbox.fontMeshCreator.GUIText
  * @author Raum
  */
 class TextMgr 
-	def self.init(loader:Loader):void
+  def self.init(loader:Loader):void
     @@texts = FontTypeToGUITextListMap.new()
-    @@rend = FontRenderer.new()
+    @@rend = RenderFont.new()
     @@ldr = loader
     FontType.init(loader)
   end
@@ -33,7 +33,7 @@ class TextMgr
   def self.loadText(text:GUIText):void
     font = text.getFont()
     data = font.loadText(text)
-    vao = @@ldr.loadFontToVAO(data.getVertexPositions(), data.getTextureCoords())
+    vao = @@ldr.loadToVAO(data.getVertexPositions(), data.getTextureCoords())
     text.setMeshInfo(vao, data.getVertexCount)
     textBatch = @@texts.get(font)
     if (textBatch == nil)

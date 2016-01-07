@@ -13,7 +13,7 @@ import org.lwjgl.glfw.GLFWScrollCallback
  * @author Raum
  */
 class MouseScroll < GLFWScrollCallback
-	@@scrollAction = MScroll(nil)
+  @@scrollAction = MScroll(nil)
   
   def initialize():void
     
