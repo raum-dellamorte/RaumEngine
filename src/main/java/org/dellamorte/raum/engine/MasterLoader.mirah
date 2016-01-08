@@ -49,15 +49,20 @@ import org.dellamorte.raum.toolbox.VertexList
 import org.dellamorte.raum.toolbox.fontMeshCreator.GUIText
 import org.dellamorte.raum.toolbox.vector.Matrix4f
 import org.dellamorte.raum.toolbox.vector.Vector2f
+import org.dellamorte.raum.toolbox.vector.Vector3f
+import org.dellamorte.raum.toolbox.vector.Vector4f
 import org.dellamorte.raum.fbuffers.FBufferWater
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL30
-import org.dellamorte.raum.toolbox.vector.Vector3f
 /**
  *
  * @author Raum
  */
 class MasterLoader 
+  attr_accessor loader:Loader
+  attr_accessor clipPlane:Vector4f
+  attr_accessor mousePicker:MousePicker
+  
   def initialize():void
     @loader = Loader.new()
     @fonts = StringFontMap.new()
@@ -68,20 +73,13 @@ class MasterLoader
     @rand = Random.new()
     @renderer = RenderMgr.new(@loader)
     @fbWater = FBufferWater.new()
+    @clipPlane = Vector4f.new()
   end
   
   def loadPlayer(model:String, texture:String, x:Double, z:Double):void
     @player = Player.new(getTModel(model, texture), 0, Vector3f.new(x.floatValue, 0, z.floatValue), 0, float(180.0), 0, float(1.0))
     @camera = Camera.new(@player)
-    @picker = MousePicker.new(@camera, @renderer.getProjectionMatrix(), @terrs)
-  end
-  
-  def mousePicker():MousePicker
-    @picker
-  end
-  
-  def loader():Loader
-    @loader
+    @mousePicker = MousePicker.new(@camera, @renderer.getProjectionMatrix(), @terrs)
   end
   
   def fbWater()
@@ -91,7 +89,7 @@ class MasterLoader
   def update():void
     @player.move(@terrs)
     @camera.move()
-    @picker.update()
+    @mousePicker.update()
   end
   
   def renderScene(withFBWater = false):void

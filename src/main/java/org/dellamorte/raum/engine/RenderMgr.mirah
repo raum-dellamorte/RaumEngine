@@ -34,6 +34,7 @@ import org.dellamorte.raum.toolbox.TModelMap
 import org.dellamorte.raum.toolbox.TerrainList
 import org.dellamorte.raum.toolbox.TerrainList
 import org.dellamorte.raum.toolbox.vector.Matrix4f
+import org.dellamorte.raum.toolbox.vector.Vector4f
 import org.lwjgl.opengl.GL11
 
 /**
@@ -76,9 +77,10 @@ class RenderMgr
     GL11.glClearColor(@@red, @@grn, @@blu, float(1.0))
   end
   
-  def render(lights:Light[], camera:Camera):void
+  def render(lights:Light[], camera:Camera, clipPlane:Vector4f):void
     prepare()
     Shader0(@shader).start()
+    @shader.loadClipPlane(clipPlane)
     @shader.loadSkyColour(@@red, @@grn, @@blu)
     @shader.loadLights(lights)
     @shader.loadViewMatrix(camera)
@@ -103,7 +105,7 @@ class RenderMgr
       processEntity(ent)
     end
     processEntity(mload.player)
-    render(mload.lights.array, mload.camera)
+    render(mload.lights.array, mload.camera, mload.clipPlane)
   end
   
   def getProjectionMatrix():Matrix4f

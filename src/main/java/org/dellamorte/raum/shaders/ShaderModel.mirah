@@ -19,6 +19,7 @@ import org.dellamorte.raum.toolbox.vector.Vector2f
 import org.dellamorte.raum.toolbox.vector.Vector3f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
+import org.dellamorte.raum.toolbox.vector.Vector4f
 import org.lwjgl.opengl.GL20
 
 
@@ -54,6 +55,7 @@ class ShaderModel < Shader0
     newLoc("skyColour")
     newLoc("numOfRows")
     newLoc("offset")
+    newLoc("plane")
     @@maxLights.times do |i:int|
       newLoc("lightPosition[" + i + "]")
       newLoc("lightColour[" + i + "]")
@@ -95,6 +97,10 @@ class ShaderModel < Shader0
         loadVector(getLoc("attenuation[" + i + "]"), Vector3f.new(float(1.0),0,0))
       end
     end
+  end
+  
+  def loadClipPlane(plane:Vector4f):void
+    loadVector(getLoc("plane"), plane)
   end
   
   def loadTransformationMatrix(matrix:Matrix4f):void
