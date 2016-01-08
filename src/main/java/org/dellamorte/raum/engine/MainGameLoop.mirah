@@ -10,6 +10,7 @@ import org.dellamorte.raum.entities.StatusBar
 import org.dellamorte.raum.render.RenderGui
 import org.dellamorte.raum.terrains.Terrain
 import org.dellamorte.raum.textures.TextureGui
+import org.dellamorte.raum.fbuffers.FBufferWater
 import org.dellamorte.raum.toolbox.vector.Vector3f
 
 
@@ -46,10 +47,11 @@ class MainGameLoop
                    1.0, 0.01, 0.002)
     
     gui = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
-    guis = TextureGui[3]
+    guis = TextureGui[4]
     guis[0] = mload.getTextureGui("HealthBarBG", -0.73, 0.82, 0.25, 0.25)
     guis[1] = mload.getTextureGui("HealthBarFG", -0.73, 0.82, 0.25, 0.25)
     guis[2] = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
+    guis[3] = mload.getTextureGuiFBWater(0.70, 0.73, 0.25, 0.25)
     guiRend = RenderGui.new(mload.loader)
     
     #testGuiStrings = GuiString[1]
@@ -87,8 +89,13 @@ class MainGameLoop
       float(0.0), float(135.0), float(0.0), float(3.0)))
     healthBar = StatusBar.new(mload.player, guis[1], "Health")
     
+    
+    
     until (DisplayMgr.isCloseRequested()) do
       DisplayMgr.prep()
+      
+      mload.renderScene(true)
+      
       mload.renderScene()
       healthBar.update()
       guiRend.render(guis)

@@ -38,7 +38,7 @@ class ShaderFont < Shader0
   end
   
   def loadColour(colour:Vector3f):void
-    loadVector(getLoc("colour"), colour)
+    load3DVector(getLoc("colour"), colour)
   end
   
   def loadTranslation(translation:Vector2f):void

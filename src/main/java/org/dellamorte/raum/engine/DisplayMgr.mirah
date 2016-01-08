@@ -32,7 +32,7 @@ class DisplayMgr
     glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE)
     glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE)
     glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 1);
     
     @@window = glfwCreateWindow(WIDTH(), HEIGHT(), "Hello World!", NULL(), NULL())
     (puts "Failed to create the GLFW window"; return false) if (@@window == NULL())

@@ -39,7 +39,7 @@ class ShaderSkyBox < Shader0
   end
   
   def loadFogColour(r:float, g:float, b:float):void
-    loadVector(getLoc("fogColour"), Vector3f.new(r,g,b))
+    load3DVector(getLoc("fogColour"), Vector3f.new(r,g,b))
   end
   
   def connectTextureUnits():void

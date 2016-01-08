@@ -49,6 +49,9 @@ import org.dellamorte.raum.toolbox.VertexList
 import org.dellamorte.raum.toolbox.fontMeshCreator.GUIText
 import org.dellamorte.raum.toolbox.vector.Matrix4f
 import org.dellamorte.raum.toolbox.vector.Vector2f
+import org.dellamorte.raum.fbuffers.FBufferWater
+import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL30
 import org.dellamorte.raum.toolbox.vector.Vector3f
 /**
  *
@@ -64,6 +67,7 @@ class MasterLoader
     @lightList = LightList.new()
     @rand = Random.new()
     @renderer = RenderMgr.new(@loader)
+    @fbWater = FBufferWater.new()
   end
   
   def loadPlayer(model:String, texture:String, x:Double, z:Double):void
@@ -80,18 +84,26 @@ class MasterLoader
     @loader
   end
   
+  def fbWater()
+    @fbWater
+  end
+  
   def update():void
     @player.move(@terrs)
     @camera.move()
     @picker.update()
   end
   
-  def renderScene():void
+  def renderScene(withFBWater = false):void
     update()
+    GL11.glEnable(GL30.GL_CLIP_DISTANCE0)
+    @fbWater.bindReflectionFrameBuffer() if withFBWater
     @renderer.renderScene(self)
+    @fbWater.unbindCurrentFrameBuffer() if withFBWater
   end
   
   def cleanUp():void
+    @fbWater.cleanUp()
     @renderer.cleanUp()
     @loader.cleanUp()
   end
@@ -206,6 +218,12 @@ class MasterLoader
   
   def getTextureGui(texture:String, a:Double, b:Double, c:Double, d:Double):TextureGui
     return TextureGui.new(getTexture(texture), 
+      Vector2f.new(a.floatValue(), b.floatValue()), 
+      Vector2f.new(c.floatValue(), d.floatValue()))
+  end
+  
+  def getTextureGuiFBWater(a:Double, b:Double, c:Double, d:Double):TextureGui
+    return TextureGui.new(@fbWater.getReflectionTexture, 
       Vector2f.new(a.floatValue(), b.floatValue()), 
       Vector2f.new(c.floatValue(), d.floatValue()))
   end

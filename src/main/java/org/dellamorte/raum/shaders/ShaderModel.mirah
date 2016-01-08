@@ -70,7 +70,7 @@ class ShaderModel < Shader0
   end
   
   def loadSkyColour(r:float, g:float, b:float):void
-    loadVector(getLoc("skyColour"), Vector3f.new(r,g,b))
+    load3DVector(getLoc("skyColour"), Vector3f.new(r,g,b))
   end
   
   def loadFakeLightingVariable(bool:boolean):void
@@ -86,13 +86,13 @@ class ShaderModel < Shader0
     l = lights.length()
     @@maxLights.times do |i:int|
       if (i < l)
-        loadVector(getLoc("lightPosition[" + i + "]"), lights[i].getPosition())
-        loadVector(getLoc("lightColour[" + i + "]"), lights[i].getColour())
-        loadVector(getLoc("attenuation[" + i + "]"), lights[i].getAttenuation())
+        load3DVector(getLoc("lightPosition[" + i + "]"), lights[i].getPosition())
+        load3DVector(getLoc("lightColour[" + i + "]"), lights[i].getColour())
+        load3DVector(getLoc("attenuation[" + i + "]"), lights[i].getAttenuation())
       else
-        loadVector(getLoc("lightPosition[" + i + "]"), Vector3f.new(0,0,0))
-        loadVector(getLoc("lightColour[" + i + "]"), Vector3f.new(0,0,0))
-        loadVector(getLoc("attenuation[" + i + "]"), Vector3f.new(float(1.0),0,0))
+        load3DVector(getLoc("lightPosition[" + i + "]"), Vector3f.new(0,0,0))
+        load3DVector(getLoc("lightColour[" + i + "]"), Vector3f.new(0,0,0))
+        load3DVector(getLoc("attenuation[" + i + "]"), Vector3f.new(float(1.0),0,0))
       end
     end
   end
