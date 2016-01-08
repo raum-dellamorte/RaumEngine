@@ -7,6 +7,7 @@
 package org.dellamorte.raum.shaders
 import org.dellamorte.raum.entities.Camera
 import org.dellamorte.raum.toolbox.vector.Matrix4f
+import org.dellamorte.raum.toolbox.vector.Vector4f
 import org.dellamorte.raum.toolbox.Maths
 
 
@@ -31,6 +32,7 @@ class ShaderWater < Shader0
     newLoc("projectionMatrix")
     newLoc("viewMatrix")
     newLoc("modelMatrix")
+    newLoc("plane")
   end
 
   def loadProjectionMatrix(projection:Matrix4f):void
@@ -44,6 +46,10 @@ class ShaderWater < Shader0
 
   def loadModelMatrix(modelMatrix:Matrix4f):void
     loadMatrix(getLoc("modelMatrix"), modelMatrix)
+  end
+  
+  def loadPlane(plane:Vector4f):void
+    loadVector(getLoc("plane"), plane)
   end
   
 end

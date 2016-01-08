@@ -66,7 +66,7 @@ class ShaderModel < Shader0
   end
   
   def loadOffset(x:float, y:float):void
-    load2DVector(getLoc("offset"), Vector2f.new(x,y))
+    loadVector(getLoc("offset"), Vector2f.new(x,y))
   end
   
   def loadSkyColour(r:float, g:float, b:float):void

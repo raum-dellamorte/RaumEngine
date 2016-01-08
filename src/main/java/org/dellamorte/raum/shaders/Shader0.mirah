@@ -11,6 +11,7 @@ import org.dellamorte.raum.toolbox.StrMap
 import org.dellamorte.raum.toolbox.vector.Matrix4f
 import org.dellamorte.raum.toolbox.vector.Vector2f
 import org.dellamorte.raum.toolbox.vector.Vector3f
+import org.dellamorte.raum.toolbox.vector.Vector4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
@@ -101,11 +102,15 @@ abstract class Shader0
     GL20.glUniform1f(location, value)
   end
   
+  def loadVector(location:int, vector:Vector4f):void
+    GL20.glUniform4f(location, vector.x, vector.y, vector.z, vector.w)
+  end
+  
   def loadVector(location:int, vector:Vector3f):void
     GL20.glUniform3f(location, vector.x, vector.y, vector.z)
   end
   
-  def load2DVector(location:int, vector:Vector2f):void
+  def loadVector(location:int, vector:Vector2f):void
     GL20.glUniform2f(location, vector.x, vector.y)
   end
   

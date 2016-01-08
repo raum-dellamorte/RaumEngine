@@ -42,7 +42,7 @@ class ShaderFont < Shader0
   end
   
   def loadTranslation(translation:Vector2f):void
-    load2DVector(getLoc("translation"), translation)
+    loadVector(getLoc("translation"), translation)
   end
   
   

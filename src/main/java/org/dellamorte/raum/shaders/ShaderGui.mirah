@@ -36,7 +36,7 @@ class ShaderGui < Shader0
   end
   
   def loadOffset(x:float, y:float):void
-    load2DVector(getLoc("offset"), Vector2f.new(x,y))
+    loadVector(getLoc("offset"), Vector2f.new(x,y))
   end
   
   def loadTransformation(matrix:Matrix4f):void
