@@ -53,6 +53,7 @@ import org.dellamorte.raum.toolbox.vector.Vector3f
 import org.dellamorte.raum.toolbox.vector.Vector4f
 import org.dellamorte.raum.fbuffers.FBufferWater
 import org.lwjgl.opengl.GL11
+import org.dellamorte.raum.entities.TileWater
 import org.lwjgl.opengl.GL30
 /**
  *
@@ -62,6 +63,8 @@ class MasterLoader
   attr_accessor loader:Loader
   attr_accessor clipPlane:Vector4f
   attr_accessor mousePicker:MousePicker
+  attr_accessor fbWater:FBufferWater
+  attr_accessor waterTiles:TileWater[]
   
   def initialize():void
     @loader = Loader.new()
@@ -73,7 +76,18 @@ class MasterLoader
     @rand = Random.new()
     @renderer = RenderMgr.new(@loader)
     @fbWater = FBufferWater.new()
-    @clipPlane = Vector4f.new()
+    @water = TileWater.new(0.0, 0.0, 0.0)
+    @waterTiles = TileWater[1]
+    @waterTiles[0] = @water
+    @withWater = boolean[3]
+    @withWater[0] = true
+    @withWater[1] = true
+    @withWater[2] = false
+    @clipPlanes = Vector4f[3]
+    @clipPlanes[0] = @water.vecReflect
+    @clipPlanes[1] = @water.vecRefract
+    @clipPlanes[2] = Vector4f.new(0, -1, 0, 10000)
+    @clipPlane = Vector4f.new(0, -1, 0, 10000)
   end
   
   def loadPlayer(model:String, texture:String, x:Double, z:Double):void
@@ -82,22 +96,32 @@ class MasterLoader
     @mousePicker = MousePicker.new(@camera, @renderer.getProjectionMatrix(), @terrs)
   end
   
-  def fbWater()
-    @fbWater
-  end
-  
   def update():void
     @player.move(@terrs)
     @camera.move()
     @mousePicker.update()
   end
   
+  def clipPlanePhase(phase:int):void
+    return if ((phase < 0) or (phase >= @clipPlanes.length))
+    @clipPlane = @clipPlanes[phase]
+  end
+  
   def renderScene(withFBWater = false):void
     update()
-    GL11.glEnable(GL30.GL_CLIP_DISTANCE0)
-    @fbWater.bindReflectionFrameBuffer() if withFBWater
+    if withFBWater
+      GL11.glEnable(GL30.GL_CLIP_DISTANCE0)
+      clipPlanePhase(0)
+      @fbWater.bindReflectionFrameBuffer()
+      @renderer.renderScene(self)
+      clipPlanePhase(1)
+      @fbWater.bindRefractionFrameBuffer()
+      @renderer.renderScene(self)
+      @fbWater.unbindCurrentFrameBuffer()
+      GL11.glDisable(GL30.GL_CLIP_DISTANCE0)
+      clipPlanePhase(2)
+    end
     @renderer.renderScene(self)
-    @fbWater.unbindCurrentFrameBuffer() if withFBWater
   end
   
   def cleanUp():void
@@ -220,8 +244,8 @@ class MasterLoader
       Vector2f.new(c.floatValue(), d.floatValue()))
   end
   
-  def getTextureGuiFBWater(a:Double, b:Double, c:Double, d:Double):TextureGui
-    return TextureGui.new(@fbWater.getReflectionTexture, 
+  def getTextureGuiFBWater(fbuffer:int, a:Double, b:Double, c:Double, d:Double):TextureGui
+    return TextureGui.new(fbuffer, 
       Vector2f.new(a.floatValue(), b.floatValue()), 
       Vector2f.new(c.floatValue(), d.floatValue()))
   end

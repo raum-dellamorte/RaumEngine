@@ -18,6 +18,7 @@ import org.dellamorte.raum.toolbox.vector.Matrix4f
 import org.dellamorte.raum.toolbox.vector.Vector3f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
+import org.dellamorte.raum.toolbox.vector.Vector4f
 import org.lwjgl.opengl.GL20
 /**
  *
@@ -53,6 +54,7 @@ class ShaderTerrain < Shader0
     newLoc("gTexture")
     newLoc("bTexture")
     newLoc("blendMap")
+    newLoc("plane")
     @@maxLights.times do |i:int|
       newLoc("lightPosition[" + i + "]")
       newLoc("lightColour[" + i + "]")
@@ -75,6 +77,10 @@ class ShaderTerrain < Shader0
   def loadShineVariables(damper:float, reflectivity:float)
     loadFloat(getLoc("shineDamper"), damper)
     loadFloat(getLoc("reflectivity"), reflectivity)
+  end
+  
+  def loadClipPlane(plane:Vector4f):void
+    loadVector(getLoc("plane"), plane)
   end
   
   def loadLights(lights:Light[])

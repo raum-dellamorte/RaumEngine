@@ -35,6 +35,8 @@ import org.dellamorte.raum.toolbox.TerrainList
 import org.dellamorte.raum.toolbox.TerrainList
 import org.dellamorte.raum.toolbox.vector.Matrix4f
 import org.dellamorte.raum.toolbox.vector.Vector4f
+import org.dellamorte.raum.shaders.ShaderWater
+import org.dellamorte.raum.entities.TileWater
 import org.lwjgl.opengl.GL11
 
 /**
@@ -64,9 +66,11 @@ class RenderMgr
     createProjectionMatrix()
     @shader = ShaderModel.new()
     @terrainShader = ShaderTerrain.new()
+    @waterShader = ShaderWater.new()
     @tmap = TModelMap.new()
     @terrains = TerrainList.new()
-    @Renderterrain = RenderTerrain.new(@terrainShader, @projectionMatrix)
+    @terrainRenderer = RenderTerrain.new(@terrainShader, @projectionMatrix)
+    @waterRenderer = RenderWater.new(loader, @waterShader, @projectionMatrix)
     @renderer = RenderModel.new(@shader, @projectionMatrix)
     @skyRend = RenderSkyBox.new(loader, @projectionMatrix)
   end
@@ -87,14 +91,19 @@ class RenderMgr
     @renderer.render(@tmap)
     Shader0(@shader).stop()
     Shader0(@terrainShader).start()
+    @terrainShader.loadClipPlane(clipPlane)
     @terrainShader.loadSkyColour(@@red, @@grn, @@blu)
     @terrainShader.loadLights(lights)
     @terrainShader.loadViewMatrix(camera)
-    @Renderterrain.render(Terrain[].cast(@terrains.array))
+    @terrainRenderer.render(Terrain[].cast(@terrains.array))
     Shader0(@terrainShader).stop()
     @skyRend.render(camera, @@red, @@grn, @@blu)
     @tmap.clear()
     @terrains.clear()
+  end
+  
+  def renderWater(wTiles:TileWater[], camera:Camera):void
+    @waterRenderer.render(wTiles, camera)
   end
   
   def renderScene(mload:MasterLoader):void
@@ -106,6 +115,7 @@ class RenderMgr
     end
     processEntity(mload.player)
     render(mload.lights.array, mload.camera, mload.clipPlane)
+    renderWater(mload.waterTiles, mload.camera)
   end
   
   def getProjectionMatrix():Matrix4f

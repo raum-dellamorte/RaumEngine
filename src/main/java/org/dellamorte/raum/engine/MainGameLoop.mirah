@@ -47,11 +47,12 @@ class MainGameLoop
                    1.0, 0.01, 0.002)
     
     gui = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
-    guis = TextureGui[4]
+    guis = TextureGui[5]
     guis[0] = mload.getTextureGui("HealthBarBG", -0.73, 0.82, 0.25, 0.25)
     guis[1] = mload.getTextureGui("HealthBarFG", -0.73, 0.82, 0.25, 0.25)
     guis[2] = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
-    guis[3] = mload.getTextureGuiFBWater(0.70, 0.73, 0.25, 0.25)
+    guis[3] = mload.getTextureGuiFBWater(mload.fbWater.getReflectionTexture , 0.70, 0.73, 0.25, 0.25)
+    guis[4] = mload.getTextureGuiFBWater(mload.fbWater.getRefractionTexture , 0.70, -0.73, 0.25, 0.25)
     guiRend = RenderGui.new(mload.loader)
     
     #testGuiStrings = GuiString[1]

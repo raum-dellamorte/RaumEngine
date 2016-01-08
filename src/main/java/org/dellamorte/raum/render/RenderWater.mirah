@@ -13,6 +13,7 @@ import org.dellamorte.raum.toolbox.vector.Matrix4f
 import org.dellamorte.raum.toolbox.vector.Vector3f
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
+import org.dellamorte.raum.toolbox.FloatArray
 import org.lwjgl.opengl.GL30
 
 /**
@@ -62,7 +63,7 @@ class RenderWater
 
   def setUpVAO(loader:Loader):void
     # Just x and z vectex positions here, y is set to 0 in v.shader
-    vertices = float[].cast [-1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1]
+    vertices = FloatArray.gen([-1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0])
     @quad = loader.loadToVAO(vertices, 2)
   end
 end
