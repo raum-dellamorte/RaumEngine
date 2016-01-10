@@ -26,6 +26,7 @@ class RenderWater
   def initialize(loader:Loader, shadr:ShaderWater, projectionMatrix:Matrix4f):void
     @quad = RawModel(nil)
     @shdr = shadr
+    @moveFactor = float(0.0)
     shader.start()
     shader.connectTextureUnits()
     shader.loadProjectionMatrix(projectionMatrix)
@@ -52,15 +53,20 @@ class RenderWater
   end
 
   def prepareRender(camera:Camera):void
-    fbWater = MasterLoader.gameMgr.fbWater
+    gameMgr = MasterLoader.gameMgr
     shader0.start()
     shader.loadViewMatrix(camera)
+    @moveFactor += float(0.03) * DisplayMgr.getFrameTimeSeconds()
+    @moveFactor %= 1
+    shader.loadMoveFactor(@moveFactor)
     GL30.glBindVertexArray(@quad.getVaoID())
     GL20.glEnableVertexAttribArray(0)
     GL13.glActiveTexture(GL13.GL_TEXTURE0)
-    GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbWater.getReflectionTexture)
+    GL11.glBindTexture(GL11.GL_TEXTURE_2D, gameMgr.fbWater.getReflectionTexture)
     GL13.glActiveTexture(GL13.GL_TEXTURE1)
-    GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbWater.getRefractionTexture)
+    GL11.glBindTexture(GL11.GL_TEXTURE_2D, gameMgr.fbWater.getRefractionTexture)
+    GL13.glActiveTexture(GL13.GL_TEXTURE2)
+    GL11.glBindTexture(GL11.GL_TEXTURE_2D, gameMgr.getTexture("waterDUDV"))
   end
 
   def unbind():void

@@ -34,11 +34,18 @@ class ShaderWater < Shader0
     newLoc("modelMatrix")
     newLoc("reflectionTexture")
     newLoc("refractionTexture")
+    newLoc("dudvMap")
+    newLoc("moveFactor")
   end
 
   def connectTextureUnits():void
     loadInt(getLoc("reflectionTexture"), 0)
     loadInt(getLoc("refractionTexture"), 1)
+    loadInt(getLoc("dudvMap"), 2)
+  end
+  
+  def loadMoveFactor(factor:float)
+    loadFloat(getLoc("moveFactor"), factor)
   end
 
   def loadProjectionMatrix(projection:Matrix4f):void
