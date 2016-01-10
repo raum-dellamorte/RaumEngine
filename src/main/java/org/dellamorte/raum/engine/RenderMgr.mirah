@@ -102,20 +102,17 @@ class RenderMgr
     @terrains.clear()
   end
   
-  def renderWater(wTiles:TileWater[], camera:Camera):void
-    @waterRenderer.render(wTiles, camera)
-  end
-  
-  def renderScene(mload:MasterLoader):void
-    mload.terrains.array.each do |ter:Terrain|
+  def renderScene():void
+    gMgr = MasterLoader.gameMgr()
+    gMgr.terrains.array.each do |ter:Terrain|
       processTerrain(ter)
     end
-    mload.entities.array.each do |ent:Entity|
+    gMgr.entities.array.each do |ent:Entity|
       processEntity(ent)
     end
-    processEntity(mload.player)
-    render(mload.lights.array, mload.camera, mload.clipPlane)
-    renderWater(mload.waterTiles, mload.camera)
+    processEntity(gMgr.player)
+    render(gMgr.lights.array, gMgr.camera, gMgr.clipPlane)
+    @waterRenderer.render(gMgr.waterTiles, gMgr.camera) if gMgr.drawWater
   end
   
   def getProjectionMatrix():Matrix4f

@@ -5,14 +5,14 @@
  */
 
 package org.dellamorte.raum.toolbox
-import org.dellamorte.raum.toolbox.vector.Vector2f as ListObj
+import org.dellamorte.raum.toolbox.vector.Vector4f as ListObj
 
 
 /**
  *
  * @author Raum
  */
-class V2List
+class V4List
   def initialize():void
     @x = ListObj[0]
   end

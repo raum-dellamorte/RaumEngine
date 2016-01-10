@@ -37,6 +37,20 @@ class Camera
     end
   end
   
+  def store():void
+    @posBk = Vector3f.new(@pos.x, @pos.y, @pos.z)
+    @pitchBk = @pitch
+    @yawBk = @yaw
+    @rollBk = @roll
+  end
+  
+  def restore():void
+    @pos = @posBk
+    @pitch = @pitchBk
+    @yaw = @yawBk
+    @roll = @rollBk
+  end
+  
   def move():void
     calcPitch()
     calcAngle()
@@ -80,6 +94,17 @@ class Camera
   
   def calcVDistance():float
     float(@distanceFromPlayer * float(Math.sin(Math.toRadians(@pitch))))
+  end
+  
+  def reflection(height:float):void
+    store()
+    dist = float(2.0) * (@pos.y - height)
+    @pos.y -= dist
+    invertPitch()
+  end
+  
+  def invertPitch():void
+    @pitch = -@pitch
   end
 end
 

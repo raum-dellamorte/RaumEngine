@@ -65,9 +65,28 @@ class MasterLoader
   attr_accessor mousePicker:MousePicker
   attr_accessor fbWater:FBufferWater
   attr_accessor waterTiles:TileWater[]
+  attr_accessor drawWater:boolean
+  
+  def self.init():void
+    @@gMgr = MasterLoader.new()
+  end
+  
+  def self.gameMgr():MasterLoader
+    @@gMgr
+  end
   
   def initialize():void
     @loader = Loader.new()
+    @fbWater = FBufferWater.new()
+    @drawWater = true
+    @water = TileWater.new(100.0, -100.0, 0.0)
+    @waterTiles = TileWater[1]
+    @waterTiles[0] = @water
+    @clipPlanes = Vector4f[3]
+    @clipPlanes[0] = @water.vecReflect
+    @clipPlanes[1] = @water.vecRefract
+    @clipPlanes[2] = Vector4f.new(0, -1, 0, 10000)
+    @clipPlane = Vector4f.new(0, -1, 0, 10000)
     @fonts = StringFontMap.new()
     @tmap = StringMap.new()
     @ents = EntityList.new()
@@ -75,19 +94,6 @@ class MasterLoader
     @lightList = LightList.new()
     @rand = Random.new()
     @renderer = RenderMgr.new(@loader)
-    @fbWater = FBufferWater.new()
-    @water = TileWater.new(0.0, 0.0, 0.0)
-    @waterTiles = TileWater[1]
-    @waterTiles[0] = @water
-    @withWater = boolean[3]
-    @withWater[0] = true
-    @withWater[1] = true
-    @withWater[2] = false
-    @clipPlanes = Vector4f[3]
-    @clipPlanes[0] = @water.vecReflect
-    @clipPlanes[1] = @water.vecRefract
-    @clipPlanes[2] = Vector4f.new(0, -1, 0, 10000)
-    @clipPlane = Vector4f.new(0, -1, 0, 10000)
   end
   
   def loadPlayer(model:String, texture:String, x:Double, z:Double):void
@@ -110,18 +116,22 @@ class MasterLoader
   def renderScene(withFBWater = false):void
     update()
     if withFBWater
+      @drawWater = false
       GL11.glEnable(GL30.GL_CLIP_DISTANCE0)
       clipPlanePhase(0)
       @fbWater.bindReflectionFrameBuffer()
-      @renderer.renderScene(self)
+      @camera.reflection(@water.h)
+      @renderer.renderScene()
       clipPlanePhase(1)
       @fbWater.bindRefractionFrameBuffer()
-      @renderer.renderScene(self)
+      @camera.restore()
+      @renderer.renderScene()
       @fbWater.unbindCurrentFrameBuffer()
       GL11.glDisable(GL30.GL_CLIP_DISTANCE0)
       clipPlanePhase(2)
+      @drawWater = true
     end
-    @renderer.renderScene(self)
+    @renderer.renderScene()
   end
   
   def cleanUp():void
@@ -238,16 +248,20 @@ class MasterLoader
                            genTextureTerrain(g),  genTextureTerrain(b))
   end
   
-  def getTextureGui(texture:String, a:Double, b:Double, c:Double, d:Double):TextureGui
-    return TextureGui.new(getTexture(texture), 
-      Vector2f.new(a.floatValue(), b.floatValue()), 
-      Vector2f.new(c.floatValue(), d.floatValue()))
+  def getTextureGui(texture:String, a:float, b:float, c:float, d:float):TextureGui
+    return TextureGui.new(getTexture(texture), Vector2f.new(a, b), Vector2f.new(c, d))
   end
   
-  def getTextureGuiFBWater(fbuffer:int, a:Double, b:Double, c:Double, d:Double):TextureGui
-    return TextureGui.new(fbuffer, 
-      Vector2f.new(a.floatValue(), b.floatValue()), 
-      Vector2f.new(c.floatValue(), d.floatValue()))
+  def getTextureGui(texture:String, a:Double, b:Double, c:Double, d:Double):TextureGui
+    return getTextureGui(texture, a.floatValue(), b.floatValue(), c.floatValue(), d.floatValue())
+  end
+  
+  def getTextureGui(fbuffer:int, a:float, b:float, c:float, d:float):TextureGui
+    return TextureGui.new(fbuffer, Vector2f.new(a, b), Vector2f.new(c, d))
+  end
+  
+  def getTextureGui(fbuffer:int, a:Double, b:Double, c:Double, d:Double):TextureGui
+    return getTextureGui(fbuffer, a.floatValue(), b.floatValue(), c.floatValue(), d.floatValue())
   end
   
   def getGUIText(text:String, font:String, size:Double, x:Double, y:Double, w:Double, center = false)

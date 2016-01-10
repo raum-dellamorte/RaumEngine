@@ -11,6 +11,8 @@ import org.dellamorte.raum.render.RenderGui
 import org.dellamorte.raum.terrains.Terrain
 import org.dellamorte.raum.textures.TextureGui
 import org.dellamorte.raum.fbuffers.FBufferWater
+import org.dellamorte.raum.entities.GuiObj
+import org.dellamorte.raum.toolbox.GuiObjList
 import org.dellamorte.raum.toolbox.vector.Vector3f
 
 
@@ -22,83 +24,77 @@ class MainGameLoop
   def self.main(args:String[]):void
     DisplayMgr.init()
     DisplayMgr.setBGColor(0.0, 0.0, 0.0, 0.0)
+    MasterLoader.init()
     
-    mload = MasterLoader.new()
+    gameMgr = MasterLoader.gameMgr()
     
-    TextMgr.init(mload.loader)
+    TextMgr.init(gameMgr.loader)
     
     ["arial", "berlinSans", "calibri", "candara", "courier", "harrington", 
      "pirate", "sans", "segoe", "segoeUI", "tahoma", "TimesNewRoman"].each do |str:String|
-      mload.addFont(str)
+      gameMgr.addFont(str)
     end
     
     ["HealthMeter", "HealthBarBG", "HealthBarFG", 
      "mytexture", "grassy2", "mud", "path", 
      "grassTexture", "fern", "stall", "playerTexture", 
      "blendMap", "pine"].each do |str:String|
-      mload.addTexture(str)
+      gameMgr.addTexture(str)
     end
     
-    mload.loadPlayer("person", "playerTexture", 50.0, -50.0)
+    gameMgr.loadPlayer("person", "playerTexture", 50.0, -50.0)
     
-    mload.addLight(0.0, 1000.0, -7000.0, 1.0, 1.0, 1.0)
-    mload.addLight(185.0, 10.0, -293.0, 
+    gameMgr.addLight(0.0, 1000.0, -7000.0, 1.0, 1.0, 1.0)
+    gameMgr.addLight(185.0, 10.0, -293.0, 
                    2.0, 0.0, 0.0,
                    1.0, 0.01, 0.002)
     
-    gui = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
-    guis = TextureGui[5]
-    guis[0] = mload.getTextureGui("HealthBarBG", -0.73, 0.82, 0.25, 0.25)
-    guis[1] = mload.getTextureGui("HealthBarFG", -0.73, 0.82, 0.25, 0.25)
-    guis[2] = mload.getTextureGui("HealthMeter", -0.73, 0.82, 0.25, 0.25)
-    guis[3] = mload.getTextureGuiFBWater(mload.fbWater.getReflectionTexture , 0.70, 0.73, 0.25, 0.25)
-    guis[4] = mload.getTextureGuiFBWater(mload.fbWater.getRefractionTexture , 0.70, -0.73, 0.25, 0.25)
-    guiRend = RenderGui.new(mload.loader)
+    guis = GuiObjList.new()
+    guis.add(GuiObj.new(0.135, 0.08, 0.25).loadTextures(["HealthBarBG", "HealthBarFG", "HealthMeter"]))
+    #guis.add(GuiObj.new(0.80, 0.20, 0.25).add(gameMgr.fbWater.getReflectionTexture))
+    #guis.add(GuiObj.new(0.80, 0.80, 0.25).add(gameMgr.fbWater.getRefractionTexture))
     
-    #testGuiStrings = GuiString[1]
-    #testGuiStrings[0] = mload.getGuiString("Hello World", -0.94, 0.88, 50)
+    guiRend = RenderGui.new(gameMgr.loader)
     
-    guiString = mload.getGUIText("Hello World", "candara", 2.5, 0.016, 0.02, 0.24, true)
+    guiString = gameMgr.getGUIText("Hello World", "candara", 2.5, 0.015, 0.02, 0.24, true)
     TextMgr.loadText(guiString)
     
-    terrainTexture = mload.genTexturePackTerrain("grassy2", "mud", "mytexture", "path")
-    bmap = mload.genTextureTerrain("blendMap")
-    mload.addTerrain(Terrain.new( 0,-1, mload.loader, terrainTexture, bmap, "heightmap"))
-    mload.addTerrain(Terrain.new(-1,-1, mload.loader, terrainTexture, bmap, "heightmap"))
+    terrainTexture = gameMgr.genTexturePackTerrain("grassy2", "mud", "mytexture", "path")
+    bmap = gameMgr.genTextureTerrain("blendMap")
+    gameMgr.addTerrain(Terrain.new( 0,-1, gameMgr.loader, terrainTexture, bmap, "heightmap"))
+    gameMgr.addTerrain(Terrain.new(-1,-1, gameMgr.loader, terrainTexture, bmap, "heightmap"))
     
-    grass = mload.getTModel("grassModel", "grassTexture", true, true)
-    fern = mload.getTModel("fern", "fern", true, true, 2)
-    tree = mload.getTModel("pine", "pine")
+    grass = gameMgr.getTModel("grassModel", "grassTexture", true, true)
+    fern = gameMgr.getTModel("fern", "fern", true, true, 2)
+    tree = gameMgr.getTModel("pine", "pine")
     
     500.times do |i:int|
       if ((i % 2) == 0)
-        mload.addEntity(Entity.new(fern, mload.rand.nextInt(4), mload.randomTerrainVector(),
-          0, mload.rand.nextFloat() * float(360.0), 0, float(0.9)))
+        gameMgr.addEntity(Entity.new(fern, gameMgr.rand.nextInt(4), gameMgr.randomTerrainVector(),
+          0, gameMgr.rand.nextFloat() * float(360.0), 0, float(0.9)))
       end
       if ((i % 3) == 0)
-        mload.addEntity(Entity.new(tree, 0, mload.randomTerrainVector(), 
-          0, mload.rand.nextFloat() * float(360.0), 0, float(1.2)))
+        gameMgr.addEntity(Entity.new(tree, 0, gameMgr.randomTerrainVector(), 
+          0, gameMgr.rand.nextFloat() * float(360.0), 0, float(1.2)))
       end
       if ((i % 5) == 0)
-        mload.addEntity(Entity.new(grass, 0, mload.randomTerrainVector(),
-          0, mload.rand.nextFloat() * float(360.0), 0, float(1.2)))
+        gameMgr.addEntity(Entity.new(grass, 0, gameMgr.randomTerrainVector(),
+          0, gameMgr.rand.nextFloat() * float(360.0), 0, float(1.2)))
       end
     end
     
-    mload.addEntity(Entity.new(mload.getTModel("stall", "stall", 1, 10.0, 0.5), 0, Vector3f.new(
+    gameMgr.addEntity(Entity.new(gameMgr.getTModel("stall", "stall", 1, 10.0, 0.5), 0, Vector3f.new(
       float(0.0),float(0.0),float(-25.0)),
       float(0.0), float(135.0), float(0.0), float(3.0)))
-    healthBar = StatusBar.new(mload.player, guis[1], "Health")
+    #healthBar = StatusBar.new(gameMgr.player, guis[1], "Health")
     
     
     
     until (DisplayMgr.isCloseRequested()) do
       DisplayMgr.prep()
       
-      mload.renderScene(true)
-      
-      mload.renderScene()
-      healthBar.update()
+      gameMgr.renderScene(true)
+      #healthBar.update()
       guiRend.render(guis)
       TextMgr.render()
       DisplayMgr.updateDisplay()
@@ -106,7 +102,7 @@ class MainGameLoop
     
     TextMgr.cleanUp()
     guiRend.cleanUp()
-    mload.cleanUp()
+    gameMgr.cleanUp()
     DisplayMgr.close()
   end
 end

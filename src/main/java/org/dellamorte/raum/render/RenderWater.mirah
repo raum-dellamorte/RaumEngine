@@ -1,6 +1,7 @@
 package org.dellamorte.raum.render
 
 import org.dellamorte.raum.engine.DisplayMgr
+import org.dellamorte.raum.engine.MasterLoader
 import org.dellamorte.raum.engine.Loader
 import org.dellamorte.raum.entities.Camera
 import org.dellamorte.raum.entities.Light
@@ -14,6 +15,7 @@ import org.dellamorte.raum.toolbox.vector.Vector3f
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
 import org.dellamorte.raum.toolbox.FloatArray
+import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL30
 
 /**
@@ -25,6 +27,7 @@ class RenderWater
     @quad = RawModel(nil)
     @shdr = shadr
     shader.start()
+    shader.connectTextureUnits()
     shader.loadProjectionMatrix(projectionMatrix)
     shader.stop()
     setUpVAO(loader)
@@ -49,10 +52,15 @@ class RenderWater
   end
 
   def prepareRender(camera:Camera):void
+    fbWater = MasterLoader.gameMgr.fbWater
     shader0.start()
     shader.loadViewMatrix(camera)
     GL30.glBindVertexArray(@quad.getVaoID())
     GL20.glEnableVertexAttribArray(0)
+    GL13.glActiveTexture(GL13.GL_TEXTURE0)
+    GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbWater.getReflectionTexture)
+    GL13.glActiveTexture(GL13.GL_TEXTURE1)
+    GL11.glBindTexture(GL11.GL_TEXTURE_2D, fbWater.getRefractionTexture)
   end
 
   def unbind():void

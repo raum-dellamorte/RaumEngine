@@ -32,6 +32,13 @@ class ShaderWater < Shader0
     newLoc("projectionMatrix")
     newLoc("viewMatrix")
     newLoc("modelMatrix")
+    newLoc("reflectionTexture")
+    newLoc("refractionTexture")
+  end
+
+  def connectTextureUnits():void
+    loadInt(getLoc("reflectionTexture"), 0)
+    loadInt(getLoc("refractionTexture"), 1)
   end
 
   def loadProjectionMatrix(projection:Matrix4f):void

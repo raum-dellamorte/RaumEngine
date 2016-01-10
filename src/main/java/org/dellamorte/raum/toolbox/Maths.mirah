@@ -49,6 +49,15 @@ class Maths
     createTransformationMatrix(translation, scale, 0)
   end
   
+  def self.createTransformationMatrixGui(translation:Vector2f, scale:Vector2f):Matrix4f
+    matrix = Matrix4f.new()
+    matrix.setIdentity()
+    trans = Vector3f.new((translation.x * float(2.0)) - float(1.0), (translation.y * float(-2.0)) + float(1.0), float(0.0))
+    Matrix4f.translate(trans, matrix, matrix)
+    Matrix4f.scale(Vector3f.new(scale.x, scale.y, float(1.0)), matrix, matrix)
+    return matrix
+  end
+  
   def self.createViewMatrix(camera:Camera):Matrix4f
     viewMatrix = Matrix4f.new()
     viewMatrix.setIdentity()
