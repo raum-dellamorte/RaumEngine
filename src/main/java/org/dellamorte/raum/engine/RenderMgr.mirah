@@ -112,7 +112,7 @@ class RenderMgr
     end
     processEntity(gMgr.player)
     render(gMgr.lights.array, gMgr.camera, gMgr.clipPlane)
-    @waterRenderer.render(gMgr.waterTiles, gMgr.camera) if gMgr.drawWater
+    @waterRenderer.render(gMgr.waterTiles, gMgr.lights.array, gMgr.camera) if gMgr.drawWater
   end
   
   def getProjectionMatrix():Matrix4f

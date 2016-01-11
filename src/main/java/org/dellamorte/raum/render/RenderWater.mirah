@@ -42,8 +42,8 @@ class RenderWater
     Shader0(@shdr)
   end
 
-  def render(water:TileWater[], camera:Camera):void # ## Generics: water:List -> WaterTile
-    prepareRender(camera)
+  def render(water:TileWater[], lights:Light[], camera:Camera):void # ## Generics: water:List -> WaterTile
+    prepareRender(lights, camera)
     water.each do |tile:TileWater|
       modelMatrix = Matrix4f(Maths.createTransformationMatrix( tile.toVector(), 0, 0, 0, TileWater.TILE_SIZE))
       shader.loadModelMatrix(modelMatrix)
@@ -52,13 +52,14 @@ class RenderWater
     unbind()
   end
 
-  def prepareRender(camera:Camera):void
+  def prepareRender(lights:Light[], camera:Camera):void
     gameMgr = MasterLoader.gameMgr
     shader0.start()
     shader.loadViewMatrix(camera)
     @moveFactor += float(0.03) * DisplayMgr.getFrameTimeSeconds()
     @moveFactor %= 1
     shader.loadMoveFactor(@moveFactor)
+    shader.loadLights(lights)
     GL30.glBindVertexArray(@quad.getVaoID())
     GL20.glEnableVertexAttribArray(0)
     GL13.glActiveTexture(GL13.GL_TEXTURE0)
@@ -67,6 +68,8 @@ class RenderWater
     GL11.glBindTexture(GL11.GL_TEXTURE_2D, gameMgr.fbWater.getRefractionTexture)
     GL13.glActiveTexture(GL13.GL_TEXTURE2)
     GL11.glBindTexture(GL11.GL_TEXTURE_2D, gameMgr.getTexture("waterDUDV"))
+    GL13.glActiveTexture(GL13.GL_TEXTURE3)
+    GL11.glBindTexture(GL11.GL_TEXTURE_2D, gameMgr.getTexture("normalMap"))
   end
 
   def unbind():void

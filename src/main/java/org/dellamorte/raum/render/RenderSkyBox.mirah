@@ -102,7 +102,7 @@ class RenderSkyBox
   end
   
   def bindTextures():void
-    @time += DisplayMgr.getFrameTimeSeconds() * float(1000.0)
+    @time += DisplayMgr.getFrameTimeSeconds() * float(200.0)
     @time = @time % float(24000.0)
     if ((@time >= 0) && (@time < 5000))
       texture1 = @ntexture

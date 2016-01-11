@@ -38,7 +38,7 @@ class MainGameLoop
     ["HealthMeter", "HealthBarBG", "HealthBarFG", 
      "mytexture", "grassy2", "mud", "path", 
      "grassTexture", "fern", "stall", "playerTexture", 
-     "blendMap", "pine", "waterDUDV"].each do |str:String|
+     "blendMap", "pine", "waterDUDV", "normalMap"].each do |str:String|
       gameMgr.addTexture(str)
     end
     
