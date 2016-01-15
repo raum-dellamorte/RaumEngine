@@ -18,11 +18,9 @@ import org.dellamorte.raum.toolbox.Maths
  * @author Raum
  */
 class ShaderWater < Shader0
-  def self.VERTEX_FILE():String(); "res/opengl/waterVertex.txt"; end
-  def self.FRAGMENT_FILE():String(); "res/opengl/waterFragment.txt"; end
   def self.MAX_LIGHTS():int(); 4; end
   def initialize():void
-    super(VERTEX_FILE(), FRAGMENT_FILE())
+    super("water")
   end
 
   $Override
@@ -41,6 +39,7 @@ class ShaderWater < Shader0
     newLoc("normalMap")
     newLoc("moveFactor")
     newLoc("camPos")
+    newLoc("depthMap")
     MAX_LIGHTS().times do |i:int|
       newLoc("lightPos[" + i + "]")
       newLoc("lightColour[" + i + "]")
@@ -53,6 +52,7 @@ class ShaderWater < Shader0
     loadInt(getLoc("refractionTexture"), 1)
     loadInt(getLoc("dudvMap"), 2)
     loadInt(getLoc("normalMap"), 3)
+    loadInt(getLoc("depthMap"), 4)
   end
   
   def loadMoveFactor(factor:float)

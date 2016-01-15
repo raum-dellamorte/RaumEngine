@@ -13,13 +13,10 @@ import org.dellamorte.raum.engine.DisplayMgr
  * @author Raum
  */
 class ShaderSkyBox < Shader0
-  @@vertexFile = "res/opengl/skyboxVertexShader.txt";
-  @@fragmentFile = "res/opengl/skyboxFragmentShader.txt";
-  
-  @@rotSpeed = float(1.0)
+  @@rotSpeed = float(0.25)
   
   def initialize()
-    super(@@vertexFile, @@fragmentFile)
+    super("skybox")
     @rotation = float(0.0)
   end
   

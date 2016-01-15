@@ -36,11 +36,11 @@ class TileWater
   end
   
   def vecReflect():Vector4f
-    Vector4f.new(0, 1, 0, -@h)
+    Vector4f.new(0, 1, 0, -@h + float(1.0))
   end
   
   def vecRefract():Vector4f
-    Vector4f.new(0, -1, 0, @h)
+    Vector4f.new(0, -1, 0, @h + float(1.0))
   end
 end
 

@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL13
 class RenderFont
   def initialize():void
     @shdr = ShaderFont.new()
+    shader0.attachReloadKey()
   end
   
   def render(texts:FontTypeToGUITextListMap):void

@@ -4,8 +4,11 @@ import java.io.BufferedReader
 import java.io.FileReader
 #import java.io.IOException
 import java.nio.FloatBuffer
+import org.dellamorte.raum.engine.DisplayMgr
 import org.dellamorte.raum.entities.Camera
 import org.dellamorte.raum.entities.Light
+import org.dellamorte.raum.input.Keyboard
+import org.dellamorte.raum.toolbox.Block
 import org.dellamorte.raum.toolbox.Maths
 import org.dellamorte.raum.toolbox.StrMap
 import org.dellamorte.raum.toolbox.vector.Matrix4f
@@ -22,10 +25,20 @@ import org.lwjgl.opengl.GL20
  * @author Raum
  */
 abstract class Shader0
-  def initialize(vertexFile:String, fragmentFile:String):void
+  def initialize(shaderType:String):void
     @matrixBuffer = FloatBuffer(BufferUtils.createFloatBuffer(16))
-    @vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER)
-    @fragmentShaderID = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER)
+    @vertShaderFile = shaderFile(shaderType, "Vert")
+    @fragShaderFile = shaderFile(shaderType, "Frag")
+    setupShader()
+  end
+  
+  def shaderFile(fname:String, type:String):String
+    return "res/opengl/" + fname + type + ".glsl"
+  end
+  
+  def setupShader():void
+    @vertexShaderID = loadShader(@vertShaderFile, GL20.GL_VERTEX_SHADER) 
+    @fragmentShaderID = loadShader(@fragShaderFile, GL20.GL_FRAGMENT_SHADER)
     @programID = GL20.glCreateProgram(); puts "programID " + @programID
     @locations = StrMap.new()
     GL20.glAttachShader(@programID, @vertexShaderID)
@@ -34,7 +47,18 @@ abstract class Shader0
     GL20.glLinkProgram(@programID)
     GL20.glValidateProgram(@programID)
     getAllUniformLocations()
-    puts "new ShaderProg superclass"
+  end
+  
+  def reloadShader():void
+    cleanUp()
+    setupShader()
+  end
+  
+  def attachReloadKey():void
+    thisShader = self
+    Keyboard.addListener(DisplayMgr.mainWindow(), 301, 0, 0) do
+      thisShader.reloadShader()
+    end
   end
   
   def getLoc(key:String):int

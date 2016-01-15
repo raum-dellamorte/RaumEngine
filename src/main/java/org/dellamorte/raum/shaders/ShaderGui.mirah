@@ -16,7 +16,7 @@ import org.dellamorte.raum.toolbox.vector.Matrix4f
  */
 class ShaderGui < Shader0
   def initialize():void
-    super("res/opengl/guiVertexShader.txt", "res/opengl/guiFragmentShader.txt")
+    super("gui")
   end
 
   $Override

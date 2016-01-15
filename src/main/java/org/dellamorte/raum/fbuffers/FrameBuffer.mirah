@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL30
  *
  * @author Raum
  */
-class FBufferWater 
+class FrameBuffer 
 	def self.REFLECTION_WIDTH():int; 320; end
   def self.REFLECTION_HEIGHT():int; 180; end
   def self.REFRACTION_WIDTH():int; 1280; end

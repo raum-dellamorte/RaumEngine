@@ -25,13 +25,10 @@ import org.lwjgl.opengl.GL20
  * @author Raum
  */
 class ShaderTerrain < Shader0
-  @@vFile = "res/opengl/terrainVertexShader.txt"
-  @@fFile = "res/opengl/terrainFragmentShader.txt"
   @@maxLights = 4
   
   def initialize():void
-    super(@@vFile, @@fFile)
-    puts "new TerrainShader"
+    super("terrain")
   end
   
   $Override

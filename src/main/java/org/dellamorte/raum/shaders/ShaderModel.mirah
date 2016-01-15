@@ -28,12 +28,10 @@ import org.lwjgl.opengl.GL20
  * @author Raum
  */
 class ShaderModel < Shader0
-  @@vFile = "res/opengl/vertexShader.txt"
-  @@fFile = "res/opengl/fragmentShader.txt"
   @@maxLights = 4
   
   def initialize():void
-    super(@@vFile, @@fFile)
+    super("model")
     puts "new ShaderOne"
   end
   

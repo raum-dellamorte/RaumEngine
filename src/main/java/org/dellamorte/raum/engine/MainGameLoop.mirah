@@ -10,9 +10,10 @@ import org.dellamorte.raum.entities.StatusBar
 import org.dellamorte.raum.render.RenderGui
 import org.dellamorte.raum.terrains.Terrain
 import org.dellamorte.raum.textures.TextureGui
-import org.dellamorte.raum.fbuffers.FBufferWater
+import org.dellamorte.raum.fbuffers.FrameBuffer
 import org.dellamorte.raum.entities.GuiObj
 import org.dellamorte.raum.toolbox.GuiObjList
+import org.dellamorte.raum.input.Keyboard
 import org.dellamorte.raum.toolbox.vector.Vector3f
 
 
@@ -57,7 +58,7 @@ class MainGameLoop
     guiRend = RenderGui.new(gameMgr.loader)
     
     guiString = gameMgr.getGUIText("Hello World", "candara", 2.5, 0.015, 0.02, 0.24, true)
-    TextMgr.loadText(guiString)
+    #TextMgr.loadText(guiString)
     
     terrainTexture = gameMgr.genTexturePackTerrain("grassy2", "mud", "mytexture", "path")
     bmap = gameMgr.genTextureTerrain("blendMap")
@@ -88,7 +89,9 @@ class MainGameLoop
       float(0.0), float(135.0), float(0.0), float(3.0)))
     #healthBar = StatusBar.new(gameMgr.player, guis[1], "Health")
     
-    
+    #Keyboard.addListener(DisplayMgr.mainWindow(), 301, 0, 0) do
+    #  puts "Pressed F12"
+    #end
     
     until (DisplayMgr.isCloseRequested()) do
       DisplayMgr.prep()

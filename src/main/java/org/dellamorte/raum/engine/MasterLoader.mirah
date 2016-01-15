@@ -51,7 +51,7 @@ import org.dellamorte.raum.toolbox.vector.Matrix4f
 import org.dellamorte.raum.toolbox.vector.Vector2f
 import org.dellamorte.raum.toolbox.vector.Vector3f
 import org.dellamorte.raum.toolbox.vector.Vector4f
-import org.dellamorte.raum.fbuffers.FBufferWater
+import org.dellamorte.raum.fbuffers.FrameBuffer
 import org.lwjgl.opengl.GL11
 import org.dellamorte.raum.entities.TileWater
 import org.lwjgl.opengl.GL30
@@ -63,7 +63,7 @@ class MasterLoader
   attr_accessor loader:Loader
   attr_accessor clipPlane:Vector4f
   attr_accessor mousePicker:MousePicker
-  attr_accessor fbWater:FBufferWater
+  attr_accessor fbWater:FrameBuffer
   attr_accessor waterTiles:TileWater[]
   attr_accessor drawWater:boolean
   
@@ -77,7 +77,7 @@ class MasterLoader
   
   def initialize():void
     @loader = Loader.new()
-    @fbWater = FBufferWater.new()
+    @fbWater = FrameBuffer.new()
     @drawWater = true
     @water = TileWater.new(100.0, -100.0, 0.0)
     @waterTiles = TileWater[1]

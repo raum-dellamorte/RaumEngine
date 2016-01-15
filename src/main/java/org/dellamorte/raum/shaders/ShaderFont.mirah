@@ -16,13 +16,8 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
 
 class ShaderFont < Shader0
-  
-  def self.VERTEX_FILE():String; "res/opengl/fontVertex.txt"; end
-  def self.FRAGMENT_FILE():String; "res/opengl/fontFragment.txt"; end
-  
   def initialize():void
-    super(VERTEX_FILE(), FRAGMENT_FILE())
-    puts "new FontShader"
+    super("font")
   end
   
   $Override
